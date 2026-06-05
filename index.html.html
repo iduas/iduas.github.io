@@ -1,0 +1,1351 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Marketing Campaign Studio</title>
+
+  <style>
+    :root {
+      --primary: #2563eb;
+      --primary-dark: #1e40af;
+      --success: #16a34a;
+      --danger: #dc2626;
+      --warning: #f59e0b;
+      --card: #ffffff;
+      --text: #111827;
+      --muted: #6b7280;
+      --border: #e5e7eb;
+      --soft-blue: #eff6ff;
+      --soft-green: #ecfdf5;
+      --soft-red: #fef2f2;
+      --soft-yellow: #fffbeb;
+      --shadow: 0 10px 25px rgba(0,0,0,0.08);
+      --device-width: 393px;
+    }
+
+    * {
+      box-sizing: border-box;
+      font-family: Arial, Tahoma, sans-serif;
+    }
+
+    body {
+      margin: 0;
+      background: linear-gradient(135deg, #eef2ff, #f8fafc);
+      color: var(--text);
+    }
+
+    .app {
+      max-width: 1300px;
+      margin: 30px auto;
+      padding: 20px;
+    }
+
+    .hero {
+      background: linear-gradient(135deg, #1d4ed8, #06b6d4);
+      color: white;
+      padding: 28px;
+      border-radius: 22px;
+      box-shadow: var(--shadow);
+      margin-bottom: 25px;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .hero-top {
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-start;
+      gap: 15px;
+      flex-wrap: wrap;
+    }
+
+    .hero h1 {
+      margin: 0 0 10px;
+      font-size: 32px;
+    }
+
+    .hero p {
+      margin: 0;
+      opacity: 0.95;
+      font-size: 16px;
+      line-height: 1.7;
+      max-width: 850px;
+    }
+
+    .language-switch {
+      display: flex;
+      gap: 8px;
+      background: rgba(255,255,255,0.16);
+      padding: 6px;
+      border-radius: 999px;
+      backdrop-filter: blur(8px);
+    }
+
+    .language-switch button {
+      padding: 9px 14px;
+      border-radius: 999px;
+      background: transparent;
+      color: white;
+      border: 0;
+      cursor: pointer;
+      font-weight: bold;
+    }
+
+    .language-switch button.active {
+      background: white;
+      color: var(--primary-dark);
+    }
+
+    .grid {
+      display: grid;
+      grid-template-columns: 1.2fr 0.8fr;
+      gap: 20px;
+    }
+
+    @media (max-width: 950px) {
+      .grid {
+        grid-template-columns: 1fr;
+      }
+    }
+
+    .card {
+      background: var(--card);
+      border: 1px solid var(--border);
+      border-radius: 18px;
+      padding: 20px;
+      box-shadow: var(--shadow);
+      margin-bottom: 20px;
+    }
+
+    .card h2 {
+      margin: 0 0 15px;
+      font-size: 22px;
+    }
+
+    .card h3 {
+      margin: 0 0 12px;
+      font-size: 18px;
+    }
+
+    label {
+      display: block;
+      font-weight: bold;
+      margin: 14px 0 7px;
+    }
+
+    input,
+    select,
+    textarea {
+      width: 100%;
+      padding: 12px 14px;
+      border: 1px solid #d1d5db;
+      border-radius: 12px;
+      font-size: 15px;
+      background: white;
+      color: var(--text);
+    }
+
+    textarea {
+      min-height: 130px;
+      resize: vertical;
+      line-height: 1.7;
+    }
+
+    input:focus,
+    select:focus,
+    textarea:focus {
+      outline: none;
+      border-color: var(--primary);
+      box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.15);
+    }
+
+    .row {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 14px;
+    }
+
+    @media (max-width: 700px) {
+      .row {
+        grid-template-columns: 1fr;
+      }
+    }
+
+    .section-title {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 10px;
+      margin-bottom: 12px;
+    }
+
+    .badge {
+      display: inline-block;
+      padding: 6px 10px;
+      border-radius: 999px;
+      font-size: 13px;
+      font-weight: bold;
+      white-space: nowrap;
+    }
+
+    .badge-blue {
+      background: var(--soft-blue);
+      color: var(--primary-dark);
+    }
+
+    .badge-green {
+      background: var(--soft-green);
+      color: var(--success);
+    }
+
+    .badge-red {
+      background: var(--soft-red);
+      color: var(--danger);
+    }
+
+    .badge-yellow {
+      background: var(--soft-yellow);
+      color: #92400e;
+    }
+
+    .stats-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(155px, 1fr));
+      gap: 12px;
+      margin-top: 15px;
+    }
+
+    .stat {
+      background: #f9fafb;
+      border: 1px solid var(--border);
+      border-radius: 14px;
+      padding: 14px;
+    }
+
+    .stat .label {
+      color: var(--muted);
+      font-size: 13px;
+      margin-bottom: 6px;
+    }
+
+    .stat .value {
+      font-weight: bold;
+      font-size: 22px;
+      color: var(--primary-dark);
+      direction: ltr;
+      text-align: right;
+      word-break: break-word;
+    }
+
+    html[dir="ltr"] .stat .value {
+      text-align: left;
+    }
+
+    .stat.success .value {
+      color: var(--success);
+    }
+
+    .total-card {
+      background: linear-gradient(135deg, #eff6ff, #ffffff);
+      border: 1px solid #bfdbfe;
+      text-align: center;
+    }
+
+    .total-card .total-label {
+      color: #334155;
+      font-weight: bold;
+      margin-bottom: 10px;
+    }
+
+    .total-card .total-value {
+      direction: ltr;
+      font-size: 36px;
+      font-weight: 900;
+      color: #1d4ed8;
+      word-break: break-word;
+    }
+
+    .hidden {
+      display: none !important;
+    }
+
+    .alerts {
+      display: grid;
+      gap: 10px;
+      margin-top: 15px;
+    }
+
+    .alert {
+      padding: 12px 14px;
+      border-radius: 12px;
+      border: 1px solid;
+      font-size: 14px;
+      line-height: 1.7;
+    }
+
+    .alert.info {
+      background: var(--soft-blue);
+      border-color: #bfdbfe;
+      color: #1e3a8a;
+    }
+
+    .alert.success {
+      background: var(--soft-green);
+      border-color: #bbf7d0;
+      color: #166534;
+    }
+
+    .alert.warning {
+      background: var(--soft-yellow);
+      border-color: #fde68a;
+      color: #92400e;
+    }
+
+    .alert.danger {
+      background: var(--soft-red);
+      border-color: #fecaca;
+      color: #991b1b;
+    }
+
+    .preview-wrapper {
+      display: grid;
+      gap: 20px;
+    }
+
+    .phone {
+      width: 100%;
+      max-width: var(--device-width);
+      margin: 0 auto;
+      border: 10px solid #111827;
+      border-radius: 34px;
+      background: #f9fafb;
+      overflow: hidden;
+      box-shadow: 0 20px 40px rgba(0,0,0,0.18);
+    }
+
+    .phone-screen {
+      background: #f9fafb;
+      min-height: 190px;
+    }
+
+    .phone-top {
+      background: #111827;
+      color: white;
+      text-align: center;
+      padding: 9px;
+      font-size: 12px;
+      font-weight: bold;
+    }
+
+    .sms-area {
+      padding: 18px;
+    }
+
+    .sms-bubble {
+      background: #dbeafe;
+      color: #111827;
+      padding: 14px;
+      border-radius: 18px 18px 4px 18px;
+      line-height: 1.6;
+      min-height: 60px;
+      white-space: pre-wrap;
+      word-break: break-word;
+      max-width: 78%;
+      margin-inline-start: auto;
+      text-align: start;
+    }
+
+    html[dir="ltr"] .sms-bubble {
+      margin-left: auto;
+      margin-right: 0;
+      border-radius: 18px 18px 18px 4px;
+    }
+
+    html[dir="rtl"] .sms-bubble {
+      margin-right: auto;
+      margin-left: 0;
+      border-radius: 18px 18px 4px 18px;
+    }
+
+    .push-area {
+      padding: 18px;
+      background: #f3f4f6;
+      min-height: 180px;
+    }
+
+    .push-preview {
+      background: white;
+      border-radius: 18px;
+      padding: 14px;
+      box-shadow: 0 8px 20px rgba(0,0,0,0.12);
+      width: 100%;
+      text-align: start;
+    }
+
+    .push-app {
+      font-size: 12px;
+      color: var(--muted);
+      margin-bottom: 8px;
+    }
+
+    .push-title {
+      font-weight: bold;
+      margin-bottom: 6px;
+      word-break: break-word;
+    }
+
+    .push-body {
+      color: #374151;
+      font-size: 14px;
+      line-height: 1.5;
+      word-break: break-word;
+    }
+
+    .summary-box {
+      background: #f8fafc;
+      border: 1px dashed #cbd5e1;
+      border-radius: 14px;
+      padding: 15px;
+      white-space: pre-wrap;
+      line-height: 1.7;
+      direction: ltr;
+      text-align: left;
+      font-family: Consolas, monospace;
+      font-size: 14px;
+      max-height: 360px;
+      overflow: auto;
+    }
+
+    .buttons {
+      display: flex;
+      gap: 10px;
+      flex-wrap: wrap;
+      margin-top: 14px;
+    }
+
+    button {
+      border: none;
+      padding: 12px 16px;
+      border-radius: 12px;
+      font-weight: bold;
+      cursor: pointer;
+      font-size: 14px;
+    }
+
+    .btn-primary {
+      background: var(--primary);
+      color: white;
+    }
+
+    .btn-primary:hover {
+      background: var(--primary-dark);
+    }
+
+    .btn-success {
+      background: var(--success);
+      color: white;
+    }
+
+    .btn-danger {
+      background: var(--danger);
+      color: white;
+    }
+
+    .btn-secondary {
+      background: #e5e7eb;
+      color: #111827;
+    }
+
+    .footer-note {
+      color: var(--muted);
+      font-size: 13px;
+      text-align: center;
+      margin-top: 25px;
+    }
+  </style>
+</head>
+
+<body>
+  <div class="app">
+    <div class="hero">
+      <div class="hero-top">
+        <div>
+          <h1 data-i18n="appTitle">Marketing Campaign Studio 🚀</h1>
+          <p data-i18n="appDescription">
+            أداة داخلية لتجهيز الحملات التسويقية، حساب تكلفة SMS، فحص Push Notification،
+            وإصدار ملخص نهائي قابل للنسخ.
+          </p>
+        </div>
+
+        <div class="language-switch">
+          <button id="btnAr" class="active" onclick="setLanguage('ar')">عربي</button>
+          <button id="btnEn" onclick="setLanguage('en')">English</button>
+        </div>
+      </div>
+    </div>
+
+    <select id="currency" class="hidden">
+      <option value="SAR" selected>SAR</option>
+    </select>
+
+    <div class="grid">
+      <main>
+        <section id="smsSection" class="card">
+          <div class="section-title">
+            <h2 data-i18n="smsBuilder">SMS Builder</h2>
+            <span id="smsLanguageBadge" class="badge badge-blue">Auto Detect</span>
+          </div>
+
+          <div class="row">
+            <div>
+              <label for="recipients" data-i18n="recipients">عدد المستلمين</label>
+              <input id="recipients" type="number" min="0" value="1" oninput="calculateAll()" />
+            </div>
+
+            <div>
+              <label for="smsLanguageMode" data-i18n="languageMode">طريقة تحديد اللغة</label>
+              <select id="smsLanguageMode" onchange="calculateAll()">
+                <option value="auto" data-i18n="auto">تلقائي</option>
+                <option value="arabic" data-i18n="arabicOption">عربي - 70 حرف لكل جزء</option>
+                <option value="english" data-i18n="englishOption">إنجليزي - 120 حرف لكل جزء</option>
+              </select>
+            </div>
+          </div>
+
+          <div class="row">
+            <div>
+              <label for="costPerPartSelect" data-i18n="costPerPart">تكلفة جزء SMS</label>
+              <select id="costPerPartSelect" onchange="handleCostSelection(); calculateAll();">
+                <option value="0.0365">0.0365</option>
+                <option value="custom" data-i18n="custom">Custom</option>
+              </select>
+            </div>
+
+            <div id="customCostWrapper" class="hidden">
+              <label for="customCostPerPart" data-i18n="customCost">تكلفة مخصصة لكل جزء SMS</label>
+              <input
+                id="customCostPerPart"
+                type="number"
+                min="0"
+                step="any"
+                data-i18n-placeholder="customCostPlaceholder"
+                placeholder="مثال: 0.045"
+                oninput="calculateAll()"
+              />
+            </div>
+          </div>
+
+          <label for="smsText" data-i18n="smsText">نص رسالة SMS</label>
+          <textarea
+            id="smsText"
+            data-i18n-placeholder="smsPlaceholder"
+            placeholder="اكتب نص الرسالة هنا..."
+            oninput="calculateAll()"
+          ></textarea>
+
+          <div class="stats-grid">
+            <div class="stat">
+              <div class="label" data-i18n="characters">عدد الحروف</div>
+              <div id="smsCharacters" class="value">0</div>
+            </div>
+
+            <div class="stat">
+              <div class="label" data-i18n="charactersPerPart">الحروف لكل جزء</div>
+              <div id="charactersPerPart" class="value">70</div>
+            </div>
+
+            <div class="stat">
+              <div class="label" data-i18n="partsPerRecipient">الأجزاء لكل مستلم</div>
+              <div id="smsParts" class="value">0</div>
+            </div>
+
+            <div class="stat">
+              <div class="label" data-i18n="totalSmsUnits">إجمالي وحدات SMS</div>
+              <div id="totalSmsUnits" class="value">0</div>
+            </div>
+
+            <div class="stat">
+              <div class="label" data-i18n="costPartLabel">تكلفة الجزء</div>
+              <div id="displayCostPerPart" class="value">0.0365</div>
+            </div>
+
+            <div class="stat success">
+              <div class="label" data-i18n="smsCost">تكلفة SMS</div>
+              <div id="smsTotalCost" class="value">0</div>
+            </div>
+          </div>
+
+          <div id="smsAlerts" class="alerts"></div>
+        </section>
+
+        <section id="pushSection" class="card">
+          <div class="section-title">
+            <h2 data-i18n="pushBuilder">Push Notification Builder</h2>
+            <span id="pushStatusBadge" class="badge badge-green">Valid</span>
+          </div>
+
+          <div class="row">
+            <div>
+              <label for="maxTitle" data-i18n="maxTitle">الحد الأقصى لحروف العنوان</label>
+              <input id="maxTitle" type="number" min="1" value="34" oninput="calculateAll()" />
+            </div>
+
+            <div>
+              <label for="maxBody" data-i18n="maxBody">الحد الأقصى لحروف النص</label>
+              <input id="maxBody" type="number" min="1" value="150" oninput="calculateAll()" />
+            </div>
+          </div>
+
+          <label for="pushTitle" data-i18n="pushTitle">عنوان الإشعار</label>
+          <input
+            id="pushTitle"
+            type="text"
+            data-i18n-placeholder="pushTitlePlaceholder"
+            placeholder="مثال: عرض خاص لك"
+            oninput="calculateAll()"
+          />
+
+          <label for="pushBody" data-i18n="pushBody">نص الإشعار</label>
+          <textarea
+            id="pushBody"
+            data-i18n-placeholder="pushBodyPlaceholder"
+            placeholder="اكتب نص إشعار Push هنا..."
+            oninput="calculateAll()"
+          ></textarea>
+
+          <div class="stats-grid">
+            <div class="stat">
+              <div class="label" data-i18n="titleCharacters">حروف العنوان</div>
+              <div id="titleCharacters" class="value">0</div>
+            </div>
+
+            <div class="stat">
+              <div class="label" data-i18n="titleRemaining">المتبقي للعنوان</div>
+              <div id="titleRemaining" class="value">34</div>
+            </div>
+
+            <div class="stat">
+              <div class="label" data-i18n="bodyCharacters">حروف النص</div>
+              <div id="bodyCharacters" class="value">0</div>
+            </div>
+
+            <div class="stat">
+              <div class="label" data-i18n="bodyRemaining">المتبقي للنص</div>
+              <div id="bodyRemaining" class="value">150</div>
+            </div>
+          </div>
+
+          <div id="pushAlerts" class="alerts"></div>
+        </section>
+      </main>
+
+      <aside>
+        <section class="card total-card">
+          <div class="total-label" data-i18n="expectedTotalCost">إجمالي التكلفة المتوقعة</div>
+          <div id="grandTotalCost" class="total-value">0 SAR</div>
+        </section>
+
+        <section class="card">
+          <h2 data-i18n="mobilePreview">معاينة الجوال</h2>
+
+          <div class="preview-wrapper">
+            <div id="smsPreviewBox">
+              <h3>SMS Preview</h3>
+              <div class="phone">
+                <div class="phone-top">SMS</div>
+                <div class="phone-screen sms-area">
+                  <div id="smsPreview" class="sms-bubble">سيظهر نص SMS هنا...</div>
+                </div>
+              </div>
+            </div>
+
+            <div id="pushPreviewBox">
+              <h3>Push Preview</h3>
+              <div class="phone">
+                <div class="phone-top">Notification</div>
+                <div class="phone-screen push-area">
+                  <div class="push-preview">
+                    <div class="push-app">Your App</div>
+                    <div id="pushPreviewTitle" class="push-title">عنوان الإشعار</div>
+                    <div id="pushPreviewBody" class="push-body">نص الإشعار سيظهر هنا...</div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <section class="card">
+          <h2 data-i18n="campaignSummary">ملخص الحملة</h2>
+
+          <div id="campaignSummaryBox" class="summary-box"></div>
+
+          <div class="buttons">
+            <button class="btn-primary" onclick="copySummary()" data-i18n="copySummary">نسخ الملخص</button>
+            <button class="btn-success" onclick="downloadSummary()" data-i18n="downloadTxt">تحميل TXT</button>
+            <button class="btn-secondary" onclick="fillDemo()" data-i18n="demo">تجربة Demo</button>
+            <button class="btn-danger" onclick="resetForm()" data-i18n="reset">إعادة تعيين</button>
+          </div>
+        </section>
+      </aside>
+    </div>
+
+    <div class="footer-note" data-i18n="footerNote">
+      Marketing Campaign Studio — حسابات تقديرية تساعد الفريق قبل الإرسال النهائي.
+    </div>
+  </div>
+
+  <script>
+    let currentLanguage = "ar";
+
+    const i18n = {
+      ar: {
+        appTitle: "Marketing Campaign Studio 🚀",
+        appDescription: "أداة داخلية لتجهيز الحملات التسويقية، حساب تكلفة SMS، فحص Push Notification، وإصدار ملخص نهائي قابل للنسخ.",
+        smsBuilder: "SMS Builder",
+        pushBuilder: "Push Notification Builder",
+        recipients: "عدد المستلمين",
+        languageMode: "طريقة تحديد اللغة",
+        auto: "تلقائي",
+        arabicOption: "عربي - 70 حرف لكل جزء",
+        englishOption: "إنجليزي - 120 حرف لكل جزء",
+        costPerPart: "تكلفة جزء SMS",
+        custom: "Custom",
+        customCost: "تكلفة مخصصة لكل جزء SMS",
+        customCostPlaceholder: "مثال: 0.045",
+        smsText: "نص رسالة SMS",
+        smsPlaceholder: "اكتب نص الرسالة هنا...",
+        characters: "عدد الحروف",
+        charactersPerPart: "الحروف لكل جزء",
+        partsPerRecipient: "الأجزاء لكل مستلم",
+        totalSmsUnits: "إجمالي وحدات SMS",
+        costPartLabel: "تكلفة الجزء",
+        smsCost: "تكلفة SMS",
+        maxTitle: "الحد الأقصى لحروف العنوان",
+        maxBody: "الحد الأقصى لحروف النص",
+        pushTitle: "عنوان الإشعار",
+        pushTitlePlaceholder: "مثال: عرض خاص لك",
+        pushBody: "نص الإشعار",
+        pushBodyPlaceholder: "اكتب نص إشعار Push هنا...",
+        titleCharacters: "حروف العنوان",
+        titleRemaining: "المتبقي للعنوان",
+        bodyCharacters: "حروف النص",
+        bodyRemaining: "المتبقي للنص",
+        expectedTotalCost: "إجمالي التكلفة المتوقعة",
+        mobilePreview: "معاينة الجوال",
+        campaignSummary: "ملخص الحملة",
+        copySummary: "نسخ الملخص",
+        downloadTxt: "تحميل TXT",
+        demo: "تجربة Demo",
+        reset: "إعادة تعيين",
+        footerNote: "Marketing Campaign Studio — حسابات تقديرية تساعد الفريق قبل الإرسال النهائي.",
+        smsPreviewEmpty: "سيظهر نص SMS هنا...",
+        pushTitleEmpty: "عنوان الإشعار",
+        pushBodyEmpty: "نص الإشعار سيظهر هنا...",
+        valid: "صالح",
+        exceeded: "متجاوز",
+        arabic: "عربي",
+        english: "إنجليزي",
+        mixed: "مختلط / Unicode",
+        alertSmsEmpty: "اكتب نص SMS حتى يتم حساب الأجزاء والتكلفة.",
+        alertMixed: "النص يحتوي على عربي وإنجليزي. غالبًا سيتم احتسابه كـ Unicode، لذلك تم استخدام حد 70 حرف لكل جزء.",
+        alertUrlSms: "تم اكتشاف رابط داخل الرسالة. تأكد أن الرابط قصير وصحيح قبل الإرسال.",
+        alertEmoji: "تم اكتشاف Emoji. في بعض أنظمة SMS قد يؤثر ذلك على الترميز وعدد الأجزاء.",
+        alertSpaces: "يوجد مسافات زائدة أو مسافات متكررة. تنظيف النص قد يقلل عدد الحروف.",
+        alertLong: "الرسالة طويلة وتساوي {parts} أجزاء لكل مستلم. راجع النص لتقليل التكلفة.",
+        alertTwoParts: "الرسالة تساوي جزأين لكل مستلم. تقليل النص قد يخفض التكلفة.",
+        alertOnePart: "SMS جيد: الرسالة داخل جزء واحد لكل مستلم.",
+        savingAlert: "لو تم تقليل <b>{chars}</b> حرف، ستنخفض الرسالة من <b>{current}</b> أجزاء إلى <b>{target}</b> أجزاء لكل مستلم.<br>التكلفة الحالية: <b>{currentCost}</b><br>التكلفة بعد التقليل: <b>{targetCost}</b><br>التوفير المتوقع: <b>{saving}</b>.",
+        pushTitleEmptyAlert: "عنوان Push فارغ.",
+        pushBodyEmptyAlert: "نص Push فارغ.",
+        pushTitleExceeded: "عنوان Push تجاوز الحد بـ <b>{count}</b> حرف.",
+        pushBodyExceeded: "نص Push تجاوز الحد بـ <b>{count}</b> حرف.",
+        pushTitleValid: "عنوان Push ضمن الحد. المتبقي: <b>{count}</b> حرف.",
+        pushBodyValid: "نص Push ضمن الحد. المتبقي: <b>{count}</b> حرف.",
+        pushUrlAlert: "تم اكتشاف رابط في نص Push. تأكد أنه واضح ومختصر.",
+        copied: "تم نسخ ملخص الحملة بنجاح.",
+        copyFailed: "لم يتم النسخ تلقائيًا. يمكنك تحديد الملخص ونسخه يدويًا.",
+        resetConfirm: "هل تريد إعادة تعيين جميع البيانات؟",
+        summaryTitle: "MARKETING CAMPAIGN SUMMARY",
+        summaryRecipients: "Recipients",
+        summarySmsDetails: "SMS DETAILS",
+        summaryDetectedLanguage: "Detected Language",
+        summaryBillingLanguage: "Billing Language",
+        summaryCharacters: "Characters",
+        summaryCharactersPerPart: "Characters Per Part",
+        summaryPartsPerRecipient: "Parts Per Recipient",
+        summaryTotalSmsUnits: "Total SMS Units",
+        summaryCostPerPart: "Cost Per Part",
+        summarySmsCost: "SMS Estimated Cost",
+        summaryPushDetails: "PUSH NOTIFICATION DETAILS",
+        summaryTitleCharacters: "Title Characters",
+        summaryBodyCharacters: "Body Characters",
+        summaryTitleStatus: "Title Status",
+        summaryBodyStatus: "Body Status",
+        summaryTotal: "TOTAL SUMMARY",
+        summaryTotalCost: "Total Estimated Cost"
+      },
+      en: {
+        appTitle: "Marketing Campaign Studio 🚀",
+        appDescription: "Internal tool for preparing marketing campaigns, calculating SMS cost, validating push notifications, and generating a copy-ready final summary.",
+        smsBuilder: "SMS Builder",
+        pushBuilder: "Push Notification Builder",
+        recipients: "Recipients",
+        languageMode: "Language Mode",
+        auto: "Auto Detect",
+        arabicOption: "Arabic - 70 characters per part",
+        englishOption: "English - 120 characters per part",
+        costPerPart: "SMS Cost Per Part",
+        custom: "Custom",
+        customCost: "Custom SMS Cost Per Part",
+        customCostPlaceholder: "Example: 0.045",
+        smsText: "SMS Text",
+        smsPlaceholder: "Enter SMS message here...",
+        characters: "Characters",
+        charactersPerPart: "Characters Per Part",
+        partsPerRecipient: "Parts Per Recipient",
+        totalSmsUnits: "Total SMS Units",
+        costPartLabel: "Cost Per Part",
+        smsCost: "SMS Cost",
+        maxTitle: "Maximum Title Characters",
+        maxBody: "Maximum Body Characters",
+        pushTitle: "Push Title",
+        pushTitlePlaceholder: "Example: Special offer for you",
+        pushBody: "Push Body",
+        pushBodyPlaceholder: "Enter push notification body here...",
+        titleCharacters: "Title Characters",
+        titleRemaining: "Title Remaining",
+        bodyCharacters: "Body Characters",
+        bodyRemaining: "Body Remaining",
+        expectedTotalCost: "Expected Total Cost",
+        mobilePreview: "Mobile Preview",
+        campaignSummary: "Campaign Summary",
+        copySummary: "Copy Summary",
+        downloadTxt: "Download TXT",
+        demo: "Demo",
+        reset: "Reset",
+        footerNote: "Marketing Campaign Studio — estimated calculations to support the team before final sending.",
+        smsPreviewEmpty: "SMS text preview will appear here...",
+        pushTitleEmpty: "Push notification title",
+        pushBodyEmpty: "Push notification body will appear here...",
+        valid: "Valid",
+        exceeded: "Exceeded",
+        arabic: "Arabic",
+        english: "English",
+        mixed: "Mixed / Unicode",
+        alertSmsEmpty: "Enter SMS text to calculate parts and cost.",
+        alertMixed: "The message contains Arabic and English. It will likely be billed as Unicode, so 70 characters per part is used.",
+        alertUrlSms: "A link was detected in the SMS. Make sure it is short and correct before sending.",
+        alertEmoji: "Emoji detected. In some SMS systems, emoji may affect encoding and number of parts.",
+        alertSpaces: "Extra spaces or repeated spaces detected. Cleaning the text may reduce character count.",
+        alertLong: "The message is long and equals {parts} parts per recipient. Review the text to reduce cost.",
+        alertTwoParts: "The message equals 2 parts per recipient. Reducing the text may lower the cost.",
+        alertOnePart: "Good SMS: the message is within one part per recipient.",
+        savingAlert: "If you reduce <b>{chars}</b> characters, the message will decrease from <b>{current}</b> parts to <b>{target}</b> parts per recipient.<br>Current cost: <b>{currentCost}</b><br>Cost after reduction: <b>{targetCost}</b><br>Expected saving: <b>{saving}</b>.",
+        pushTitleEmptyAlert: "Push title is empty.",
+        pushBodyEmptyAlert: "Push body is empty.",
+        pushTitleExceeded: "Push title exceeded the limit by <b>{count}</b> characters.",
+        pushBodyExceeded: "Push body exceeded the limit by <b>{count}</b> characters.",
+        pushTitleValid: "Push title is within the limit. Remaining: <b>{count}</b> characters.",
+        pushBodyValid: "Push body is within the limit. Remaining: <b>{count}</b> characters.",
+        pushUrlAlert: "A link was detected in the push body. Make sure it is clear and short.",
+        copied: "Campaign summary copied successfully.",
+        copyFailed: "Automatic copy failed. You can select and copy the summary manually.",
+        resetConfirm: "Do you want to reset all data?",
+        summaryTitle: "MARKETING CAMPAIGN SUMMARY",
+        summaryRecipients: "Recipients",
+        summarySmsDetails: "SMS DETAILS",
+        summaryDetectedLanguage: "Detected Language",
+        summaryBillingLanguage: "Billing Language",
+        summaryCharacters: "Characters",
+        summaryCharactersPerPart: "Characters Per Part",
+        summaryPartsPerRecipient: "Parts Per Recipient",
+        summaryTotalSmsUnits: "Total SMS Units",
+        summaryCostPerPart: "Cost Per Part",
+        summarySmsCost: "SMS Estimated Cost",
+        summaryPushDetails: "PUSH NOTIFICATION DETAILS",
+        summaryTitleCharacters: "Title Characters",
+        summaryBodyCharacters: "Body Characters",
+        summaryTitleStatus: "Title Status",
+        summaryBodyStatus: "Body Status",
+        summaryTotal: "TOTAL SUMMARY",
+        summaryTotalCost: "Total Estimated Cost"
+      }
+    };
+
+    function t(key) {
+      return i18n[currentLanguage][key] || key;
+    }
+
+    function template(text, values) {
+      return text.replace(/\{(\w+)\}/g, function(match, key) {
+        return values[key] !== undefined ? values[key] : match;
+      });
+    }
+
+    function setLanguage(lang) {
+      currentLanguage = lang;
+
+      document.documentElement.lang = lang;
+      document.documentElement.dir = lang === "ar" ? "rtl" : "ltr";
+
+      document.getElementById("btnAr").classList.toggle("active", lang === "ar");
+      document.getElementById("btnEn").classList.toggle("active", lang === "en");
+
+      document.querySelectorAll("[data-i18n]").forEach(function(el) {
+        el.textContent = t(el.getAttribute("data-i18n"));
+      });
+
+      document.querySelectorAll("[data-i18n-placeholder]").forEach(function(el) {
+        el.placeholder = t(el.getAttribute("data-i18n-placeholder"));
+      });
+
+      calculateAll();
+    }
+
+    function getNumber(id) {
+      const value = parseFloat(document.getElementById(id).value);
+      return isNaN(value) ? 0 : value;
+    }
+
+    function getInt(id) {
+      const value = parseInt(document.getElementById(id).value, 10);
+      return isNaN(value) ? 0 : value;
+    }
+
+    function getText(id) {
+      return document.getElementById(id).value || "";
+    }
+
+    function formatNumber(number, maxDigits = 6) {
+      return Number(number).toLocaleString("en-US", {
+        minimumFractionDigits: 0,
+        maximumFractionDigits: maxDigits
+      });
+    }
+
+    function countCharacters(text) {
+      return text.length;
+    }
+
+    function hasArabic(text) {
+      return /[\u0600-\u06FF]/.test(text);
+    }
+
+    function hasEnglish(text) {
+      return /[A-Za-z]/.test(text);
+    }
+
+    function hasUrl(text) {
+      return /(https?:\/\/|www\.|\.com|\.net|\.sa|\.org)/i.test(text);
+    }
+
+    function hasEmoji(text) {
+      return /[\u{1F300}-\u{1FAFF}]/u.test(text);
+    }
+
+    function hasExtraSpaces(text) {
+      return /\s{2,}/.test(text) || text !== text.trim();
+    }
+
+    function detectLanguage(text) {
+      const arabic = hasArabic(text);
+      const english = hasEnglish(text);
+
+      if (arabic && english) return "mixed";
+      if (arabic) return "arabic";
+      if (english) return "english";
+      return "unknown";
+    }
+
+    function getEffectiveSmsLanguage() {
+      const mode = document.getElementById("smsLanguageMode").value;
+      const text = getText("smsText");
+
+      if (mode === "arabic") return "arabic";
+      if (mode === "english") return "english";
+
+      const detected = detectLanguage(text);
+
+      if (detected === "arabic") return "arabic";
+      if (detected === "english") return "english";
+      if (detected === "mixed") return "arabic";
+
+      return "arabic";
+    }
+
+    function getCharactersPerPart(language) {
+      if (language === "english") return 120;
+      return 70;
+    }
+
+    function handleCostSelection() {
+      const selectedCost = document.getElementById("costPerPartSelect").value;
+      const customWrapper = document.getElementById("customCostWrapper");
+
+      if (selectedCost === "custom") {
+        customWrapper.classList.remove("hidden");
+      } else {
+        customWrapper.classList.add("hidden");
+      }
+    }
+
+    function getCostPerPart() {
+      const selected = document.getElementById("costPerPartSelect").value;
+
+      if (selected === "custom") {
+        return getNumber("customCostPerPart");
+      }
+
+      return parseFloat(selected) || 0;
+    }
+
+    function getDisplayedCostPerPart() {
+      const selected = document.getElementById("costPerPartSelect").value;
+
+      if (selected === "custom") {
+        return getText("customCostPerPart") || "0";
+      }
+
+      return selected;
+    }
+
+    function addAlert(containerId, type, message) {
+      const container = document.getElementById(containerId);
+      const div = document.createElement("div");
+      div.className = "alert " + type;
+      div.innerHTML = message;
+      container.appendChild(div);
+    }
+
+    function clearAlerts() {
+      document.getElementById("smsAlerts").innerHTML = "";
+      document.getElementById("pushAlerts").innerHTML = "";
+    }
+
+    function calculateSavingsDetails(characters, charactersPerPart, currentParts, recipients, costPerPart) {
+      if (currentParts <= 1 || characters <= 0) {
+        return null;
+      }
+
+      const targetParts = currentParts - 1;
+      const targetMaxCharacters = targetParts * charactersPerPart;
+      const charsToReduce = characters - targetMaxCharacters;
+
+      const currentUnits = currentParts * recipients;
+      const targetUnits = targetParts * recipients;
+
+      const currentCost = currentUnits * costPerPart;
+      const targetCost = targetUnits * costPerPart;
+      const saving = currentCost - targetCost;
+
+      return {
+        currentParts,
+        targetParts,
+        charsToReduce,
+        currentCost,
+        targetCost,
+        saving
+      };
+    }
+
+    function calculateSMS() {
+      const recipients = getInt("recipients");
+      const smsText = getText("smsText");
+      const characters = countCharacters(smsText);
+      const detectedLanguage = detectLanguage(smsText);
+      const smsLanguage = getEffectiveSmsLanguage();
+      const charactersPerPart = getCharactersPerPart(smsLanguage);
+      const smsParts = characters > 0 ? Math.ceil(characters / charactersPerPart) : 0;
+      const totalSmsUnits = smsParts * recipients;
+      const costPerPart = getCostPerPart();
+      const smsCost = totalSmsUnits * costPerPart;
+
+      document.getElementById("smsCharacters").textContent = formatNumber(characters, 0);
+      document.getElementById("charactersPerPart").textContent = charactersPerPart;
+      document.getElementById("smsParts").textContent = smsParts;
+      document.getElementById("totalSmsUnits").textContent = formatNumber(totalSmsUnits, 0);
+      document.getElementById("displayCostPerPart").textContent = getDisplayedCostPerPart();
+      document.getElementById("smsTotalCost").textContent = formatNumber(smsCost, 6);
+
+      const badge = document.getElementById("smsLanguageBadge");
+
+      if (detectedLanguage === "mixed") {
+        badge.textContent = t("mixed");
+        badge.className = "badge badge-yellow";
+      } else if (smsLanguage === "arabic") {
+        badge.textContent = t("arabic");
+        badge.className = "badge badge-blue";
+      } else {
+        badge.textContent = t("english");
+        badge.className = "badge badge-green";
+      }
+
+      if (characters === 0) {
+        addAlert("smsAlerts", "warning", t("alertSmsEmpty"));
+      }
+
+      if (detectedLanguage === "mixed") {
+        addAlert("smsAlerts", "warning", t("alertMixed"));
+      }
+
+      if (hasUrl(smsText)) {
+        addAlert("smsAlerts", "info", t("alertUrlSms"));
+      }
+
+      if (hasEmoji(smsText)) {
+        addAlert("smsAlerts", "warning", t("alertEmoji"));
+      }
+
+      if (hasExtraSpaces(smsText)) {
+        addAlert("smsAlerts", "warning", t("alertSpaces"));
+      }
+
+      if (smsParts >= 3) {
+        addAlert("smsAlerts", "danger", template(t("alertLong"), { parts: smsParts }));
+      } else if (smsParts === 2) {
+        addAlert("smsAlerts", "warning", t("alertTwoParts"));
+      } else if (smsParts === 1 && characters > 0) {
+        addAlert("smsAlerts", "success", t("alertOnePart"));
+      }
+
+      const savingDetails = calculateSavingsDetails(
+        characters,
+        charactersPerPart,
+        smsParts,
+        recipients,
+        costPerPart
+      );
+
+      if (savingDetails && savingDetails.charsToReduce > 0) {
+        addAlert(
+          "smsAlerts",
+          "info",
+          template(t("savingAlert"), {
+            chars: formatNumber(savingDetails.charsToReduce, 0),
+            current: savingDetails.currentParts,
+            target: savingDetails.targetParts,
+            currentCost: formatNumber(savingDetails.currentCost, 6),
+            targetCost: formatNumber(savingDetails.targetCost, 6),
+            saving: formatNumber(savingDetails.saving, 6)
+          })
+        );
+      }
+
+      return {
+        characters,
+        detectedLanguage,
+        smsLanguage,
+        charactersPerPart,
+        smsParts,
+        totalSmsUnits,
+        costPerPart,
+        smsCost
+      };
+    }
+
+    function calculatePush() {
+      const title = getText("pushTitle");
+      const body = getText("pushBody");
+      const maxTitle = getInt("maxTitle");
+      const maxBody = getInt("maxBody");
+
+      const titleCharacters = countCharacters(title);
+      const bodyCharacters = countCharacters(body);
+
+      const titleRemaining = maxTitle - titleCharacters;
+      const bodyRemaining = maxBody - bodyCharacters;
+
+      const titleValid = titleCharacters <= maxTitle;
+      const bodyValid = bodyCharacters <= maxBody;
+      const pushValid = titleValid && bodyValid;
+
+      document.getElementById("titleCharacters").textContent = titleCharacters;
+      document.getElementById("titleRemaining").textContent = titleRemaining;
+      document.getElementById("bodyCharacters").textContent = bodyCharacters;
+      document.getElementById("bodyRemaining").textContent = bodyRemaining;
+
+      const badge = document.getElementById("pushStatusBadge");
+
+      if (pushValid) {
+        badge.textContent = t("valid");
+        badge.className = "badge badge-green";
+      } else {
+        badge.textContent = t("exceeded");
+        badge.className = "badge badge-red";
+      }
+
+      if (titleCharacters === 0) {
+        addAlert("pushAlerts", "warning", t("pushTitleEmptyAlert"));
+      }
+
+      if (bodyCharacters === 0) {
+        addAlert("pushAlerts", "warning", t("pushBodyEmptyAlert"));
+      }
+
+      if (!titleValid) {
+        addAlert("pushAlerts", "danger", template(t("pushTitleExceeded"), { count: Math.abs(titleRemaining) }));
+      } else {
+        addAlert("pushAlerts", "success", template(t("pushTitleValid"), { count: titleRemaining }));
+      }
+
+      if (!bodyValid) {
+        addAlert("pushAlerts", "danger", template(t("pushBodyExceeded"), { count: Math.abs(bodyRemaining) }));
+      } else {
+        addAlert("pushAlerts", "success", template(t("pushBodyValid"), { count: bodyRemaining }));
+      }
+
+      if (hasUrl(body)) {
+        addAlert("pushAlerts", "info", t("pushUrlAlert"));
+      }
+
+      return {
+        titleCharacters,
+        bodyCharacters,
+        maxTitle,
+        maxBody,
+        titleRemaining,
+        bodyRemaining,
+        titleValid,
+        bodyValid,
+        pushValid
+      };
+    }
+
+    function updateGrandTotal(totalCost) {
+      const currency = document.getElementById("currency").value;
+      document.getElementById("grandTotalCost").textContent = formatNumber(totalCost, 6) + " " + currency;
+    }
+
+    function updatePreview() {
+      const smsText = getText("smsText").trim();
+      const pushTitle = getText("pushTitle").trim();
+      const pushBody = getText("pushBody").trim();
+
+      document.getElementById("smsPreview").textContent = smsText || t("smsPreviewEmpty");
+      document.getElementById("pushPreviewTitle").textContent = pushTitle || t("pushTitleEmpty");
+      document.getElementById("pushPreviewBody").textContent = pushBody || t("pushBodyEmpty");
+    }
+
+    function buildSummary(sms, push, totalCost) {
+      const currency = document.getElementById("currency").value;
+      const recipients = getInt("recipients");
+
+      let summary = "";
+      summary += t("summaryTitle") + "\n";
+      summary += "==========================\n\n";
+
+      summary += t("summaryRecipients") + ": " + formatNumber(recipients, 0) + "\n\n";
+
+      summary += t("summarySmsDetails") + "\n";
+      summary += "-----------\n";
+      summary += t("summaryDetectedLanguage") + ": " + (sms.detectedLanguage || "-") + "\n";
+      summary += t("summaryBillingLanguage") + ": " + sms.smsLanguage + "\n";
+      summary += t("summaryCharacters") + ": " + sms.characters + "\n";
+      summary += t("summaryCharactersPerPart") + ": " + sms.charactersPerPart + "\n";
+      summary += t("summaryPartsPerRecipient") + ": " + sms.smsParts + "\n";
+      summary += t("summaryTotalSmsUnits") + ": " + sms.totalSmsUnits + "\n";
+      summary += t("summaryCostPerPart") + ": " + getDisplayedCostPerPart() + "\n";
+      summary += t("summarySmsCost") + ": " + formatNumber(sms.smsCost, 6) + " " + currency + "\n\n";
+
+      summary += t("summaryPushDetails") + "\n";
+      summary += "-------------------------\n";
+      summary += t("summaryTitleCharacters") + ": " + push.titleCharacters + " / " + push.maxTitle + "\n";
+      summary += t("summaryBodyCharacters") + ": " + push.bodyCharacters + " / " + push.maxBody + "\n";
+      summary += t("summaryTitleStatus") + ": " + (push.titleValid ? t("valid") : t("exceeded")) + "\n";
+      summary += t("summaryBodyStatus") + ": " + (push.bodyValid ? t("valid") : t("exceeded")) + "\n\n";
+
+      summary += t("summaryTotal") + "\n";
+      summary += "-------------\n";
+      summary += t("summaryTotalCost") + ": " + formatNumber(totalCost, 6) + " " + currency + "\n";
+
+      document.getElementById("campaignSummaryBox").textContent = summary;
+    }
+
+    function calculateAll() {
+      clearAlerts();
+      handleCostSelection();
+
+      const sms = calculateSMS();
+      const push = calculatePush();
+
+      const totalCost = sms.smsCost || 0;
+
+      updateGrandTotal(totalCost);
+      updatePreview();
+      buildSummary(sms, push, totalCost);
+    }
+
+    function copySummary() {
+      const text = document.getElementById("campaignSummaryBox").textContent;
+
+      navigator.clipboard.writeText(text).then(function () {
+        alert(t("copied"));
+      }).catch(function () {
+        alert(t("copyFailed"));
+      });
+    }
+
+    function downloadSummary() {
+      const text = document.getElementById("campaignSummaryBox").textContent;
+
+      const blob = new Blob([text], { type: "text/plain;charset=utf-8" });
+      const url = URL.createObjectURL(blob);
+
+      const link = document.createElement("a");
+      link.href = url;
+      link.download = "campaign-summary.txt";
+      document.body.appendChild(link);
+      link.click();
+      document.body.removeChild(link);
+
+      URL.revokeObjectURL(url);
+    }
+
+    function fillDemo() {
+      document.getElementById("recipients").value = "100000";
+      document.getElementById("smsLanguageMode").value = "auto";
+      document.getElementById("costPerPartSelect").value = "0.0365";
+
+      if (currentLanguage === "ar") {
+        document.getElementById("smsText").value =
+          "عرض خاص لعملائنا المميزين! احصل على خصم 20% لفترة محدودة. تسوق الآن واستمتع بمزايا حصرية.";
+        document.getElementById("pushTitle").value = "عرض خاص لك";
+        document.getElementById("pushBody").value =
+          "خصم 20% لفترة محدودة لعملائنا المميزين. لا تفوت العرض.";
+      } else {
+        document.getElementById("smsText").value =
+          "Special offer for our valued customers! Get 20% off for a limited time. Shop now and enjoy exclusive benefits.";
+        document.getElementById("pushTitle").value = "Special offer";
+        document.getElementById("pushBody").value =
+          "Get 20% off for a limited time. Do not miss this exclusive offer.";
+      }
+
+      document.getElementById("maxTitle").value = "34";
+      document.getElementById("maxBody").value = "150";
+
+      calculateAll();
+    }
+
+    function resetForm() {
+      if (!confirm(t("resetConfirm"))) return;
+
+      document.getElementById("recipients").value = "1";
+      document.getElementById("smsLanguageMode").value = "auto";
+      document.getElementById("costPerPartSelect").value = "0.0365";
+      document.getElementById("customCostPerPart").value = "";
+      document.getElementById("smsText").value = "";
+
+      document.getElementById("maxTitle").value = "34";
+      document.getElementById("maxBody").value = "150";
+      document.getElementById("pushTitle").value = "";
+      document.getElementById("pushBody").value = "";
+
+      calculateAll();
+    }
+
+    setLanguage("ar");
+  </script>
+</body>
+</html>
