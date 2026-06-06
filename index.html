@@ -467,7 +467,7 @@
               <div id="arSpellErrors" class="spell-errors"></div>
             </div>
             <div class="buttons">
-              <button class="btn btn-secondary btn-mini" onclick="App.cleanText('smsAr')" data-i18n="cleanArabic">تنظيف النص</button>
+              <button class="btn btn-secondary btn-mini" onclick="App.cleanText('smsAr')" data-i18n="cleanArabic">الغاء المسافات الزائدة</button>
             </div>
             <div class="stats-grid">
               <div class="stat"><div class="lbl" data-i18n="characters">حروف</div><div id="arChars" class="val">0</div></div>
@@ -677,7 +677,7 @@ const i18n = {
     footerNote:"Marketing Campaign Studio Pro — جميع الحسابات تعمل محلياً داخل المتصفح.",
     emptyArabicSms:"نص SMS العربي فارغ.", emptyEnglishSms:"نص SMS الإنجليزي فارغ.",
     smsOnePartAr:"✅ الرسالة العربية داخل جزء واحد.", smsOnePartEn:"✅ English SMS is within 1 part.",
-    valid:"صالح", exceeded:"متجاوز",
+    valid:"مفعل", exceeded:"متجاوز",
     copied:"تم نسخ الملخص بنجاح.", copyFailed:"فشل النسخ التلقائي.",
     resetConfirm:"هل أنت متأكد من مسح كافة البيانات؟",
     spellSuggest:"💡 اقتراحات التدقيق",
@@ -720,7 +720,7 @@ const i18n = {
     arabicSms:"Arabic", englishSms:"English",
     arabicSmsText:"Arabic SMS Text", englishSmsText:"English SMS Text",
     arabicRecipients:"Arabic Recipients", englishRecipients:"English Recipients",
-    cleanArabic:"Clean Arabic", cleanEnglish:"Clean English",
+    cleanArabic:"Remove Extra Spacess", cleanEnglish:"Remove Extra Spacess",
     characters:"Chars", parts:"Parts", units:"Units", cost:"Cost",
     pushBuilder:"Push Builder", arabicPush:"Arabic Push", englishPush:"English Push",
     pushTitle:"Title", pushBody:"Body", maxTitle:"Max Title Chars", maxBody:"Max Body Chars",
@@ -935,7 +935,7 @@ const App = {
     const tEnP = el.pushTitleEn.value.length;
     const bEnP = el.pushBodyEn.value.length;
     const maxT = parseInt(el.maxTitle.value, 10) || 34;
-    const maxB = parseInt(el.maxBody.value, 10) || 150;
+    const maxB = parseInt(el.maxBody.value, 10) || 215;
     const pushOk = tArP<=maxT && bArP<=maxB && tEnP<=maxT && bEnP<=maxB;
 
     /* store result in state — don't read from DOM later */
