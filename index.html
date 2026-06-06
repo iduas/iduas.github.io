@@ -666,7 +666,7 @@ const i18n = {
     arabicRecipients:"عدد المستلمين", englishRecipients:"عدد المستلمين",
     cleanArabic:"الغاء المسافات الزائدة", cleanEnglish:"الغاء المسافات الزائدة",
     characters:"حروف", parts:"أجزاء", units:"وحدات", cost:"تكلفة",
-    pushBuilder:"Push notfication", arabicPush:"عربي", englishPush:"انجليزي",
+    pushBuilder:"منشئ Push", arabicPush:"Push عربي", englishPush:"English Push",
     pushTitle:"العنوان", pushBody:"النص", maxTitle:"أقصى حروف العنوان", maxBody:"أقصى حروف النص",
     arTitle:"عنوان عربي", arBody:"نص عربي", enTitle:"EN Title", enBody:"EN Body",
     expectedTotalCost:"إجمالي التكلفة", arabicCost:"عربي", englishCost:"إنجليزي",
@@ -926,7 +926,7 @@ const App = {
     const rEn = Math.max(0, parseInt(el.enRecipients.value, 10) || 0);
 
     const arSms = this.calcSms(txtAr, 70,  rAr, cpp);
-    const enSms = this.calcSms(txtEn, 120, rEn, cpp);
+    const enSms = this.calcSms(txtEn, 160, rEn, cpp);
     const grand = arSms.cost + enSms.cost;
 
     /* push */
@@ -1078,7 +1078,7 @@ const App = {
 
     // English: same
     if (!arLink && !enLink && hasEnText && d.enSms.parts > 1) {
-      const charsInCurPart = d.txtEn.length % 120 || 120;
+      const charsInCurPart = d.txtEn.length % 160 || 160;
       const charsToTrim = charsInCurPart;
       const newParts = d.enSms.parts - 1;
       const newCost = newParts * d.rEn * cpp;
@@ -1095,11 +1095,7 @@ const App = {
     if (!arLink && !enLink && !hasArText) this._tip(tips, "info", this.t("tipEmptyAr"), null);
     if (!arLink && !enLink && !hasEnText) this._tip(tips, "info", this.t("tipEmptyEn"), null);
 
-    // Bulk discount hint
-    const totalRecip = d.rAr + d.rEn;
-    if (!arLink && !enLink && totalRecip >= 50000) {
-      this._tip(tips, "warning", this.t("tipBulkDiscount"), null);
-    }
+
 
     // Cost per recipient by language
     // Arabic and English audiences can have different recipients and different SMS parts,
