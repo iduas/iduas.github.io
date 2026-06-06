@@ -3,1349 +3,1346 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Marketing Campaign Studio</title>
-
+  <title>Marketing Campaign Studio Pro</title>
   <style>
     :root {
       --primary: #2563eb;
       --primary-dark: #1e40af;
+      --primary-light: #eff6ff;
       --success: #16a34a;
+      --success-light: #ecfdf5;
       --danger: #dc2626;
-      --warning: #f59e0b;
+      --danger-light: #fef2f2;
+      --warning: #d97706;
+      --warning-light: #fffbeb;
+      --info-light: #f0f9ff;
       --card: #ffffff;
-      --text: #111827;
-      --muted: #6b7280;
-      --border: #e5e7eb;
-      --soft-blue: #eff6ff;
-      --soft-green: #ecfdf5;
-      --soft-red: #fef2f2;
-      --soft-yellow: #fffbeb;
-      --shadow: 0 10px 25px rgba(0,0,0,0.08);
-      --device-width: 393px;
+      --text: #0f172a;
+      --text-muted: #64748b;
+      --border: #e2e8f0;
+      --border-strong: #cbd5e1;
+      --bg: #f8fafc;
+      --shadow-sm: 0 1px 3px rgba(0,0,0,0.06), 0 1px 2px rgba(0,0,0,0.04);
+      --shadow: 0 4px 16px rgba(0,0,0,0.07), 0 1px 4px rgba(0,0,0,0.04);
+      --shadow-lg: 0 10px 32px rgba(0,0,0,0.09), 0 2px 8px rgba(0,0,0,0.05);
+      --radius: 16px;
+      --radius-sm: 10px;
+      --radius-xs: 6px;
+      --font: Arial, Tahoma, sans-serif;
+      --mono: Consolas, monospace;
     }
 
-    * {
-      box-sizing: border-box;
-      font-family: Arial, Tahoma, sans-serif;
-    }
+    * { box-sizing: border-box; margin: 0; padding: 0; }
 
     body {
-      margin: 0;
-      background: linear-gradient(135deg, #eef2ff, #f8fafc);
+      font-family: var(--font);
+      background: var(--bg);
       color: var(--text);
+      font-size: 15px;
+      line-height: 1.6;
     }
 
-    .app {
-      max-width: 1300px;
-      margin: 30px auto;
-      padding: 20px;
-    }
+    .app { max-width: 1440px; margin: 0 auto; padding: 24px 20px 40px; }
 
+    /* ── Hero ── */
     .hero {
-      background: linear-gradient(135deg, #1d4ed8, #06b6d4);
+      background: linear-gradient(135deg, #1e3a8a 0%, #1d4ed8 50%, #0ea5e9 100%);
       color: white;
-      padding: 28px;
-      border-radius: 22px;
-      box-shadow: var(--shadow);
-      margin-bottom: 25px;
+      padding: 28px 32px;
+      border-radius: 20px;
+      box-shadow: var(--shadow-lg);
+      margin-bottom: 24px;
       position: relative;
       overflow: hidden;
     }
-
-    .hero-top {
-      display: flex;
-      justify-content: space-between;
-      align-items: flex-start;
-      gap: 15px;
-      flex-wrap: wrap;
+    .hero::before {
+      content: '';
+      position: absolute; inset: 0;
+      background: radial-gradient(ellipse at 80% 50%, rgba(255,255,255,0.07) 0%, transparent 65%);
+      pointer-events: none;
     }
+    .hero-top { display: flex; justify-content: space-between; align-items: flex-start; gap: 16px; flex-wrap: wrap; }
+    .hero h1 { font-size: 28px; font-weight: 700; letter-spacing: -0.3px; margin-bottom: 8px; }
+    .hero p { opacity: 0.9; font-size: 14px; line-height: 1.7; max-width: 820px; }
 
-    .hero h1 {
-      margin: 0 0 10px;
-      font-size: 32px;
-    }
-
-    .hero p {
-      margin: 0;
-      opacity: 0.95;
-      font-size: 16px;
-      line-height: 1.7;
-      max-width: 850px;
-    }
-
-    .language-switch {
-      display: flex;
-      gap: 8px;
-      background: rgba(255,255,255,0.16);
-      padding: 6px;
-      border-radius: 999px;
+    .lang-switcher {
+      display: flex; gap: 4px;
+      background: rgba(255,255,255,0.12);
+      padding: 4px; border-radius: 999px;
       backdrop-filter: blur(8px);
+      flex-shrink: 0;
     }
-
-    .language-switch button {
-      padding: 9px 14px;
-      border-radius: 999px;
-      background: transparent;
-      color: white;
-      border: 0;
-      cursor: pointer;
-      font-weight: bold;
+    .lang-switcher button {
+      padding: 7px 14px; border-radius: 999px;
+      background: transparent; color: rgba(255,255,255,0.8);
+      border: 0; cursor: pointer; font-weight: 600; font-size: 13px;
+      transition: all 0.18s ease; font-family: var(--font);
     }
+    .lang-switcher button.active { background: white; color: var(--primary-dark); }
 
-    .language-switch button.active {
-      background: white;
-      color: var(--primary-dark);
-    }
-
-    .grid {
+    /* ── Grid ── */
+    .main-grid {
       display: grid;
-      grid-template-columns: 1.2fr 0.8fr;
+      grid-template-columns: minmax(0, 1.4fr) minmax(340px, 0.6fr);
       gap: 20px;
+      align-items: start;
     }
+    @media (max-width: 1050px) { .main-grid { grid-template-columns: 1fr; } }
 
-    @media (max-width: 950px) {
-      .grid {
-        grid-template-columns: 1fr;
-      }
-    }
-
+    /* ── Card ── */
     .card {
       background: var(--card);
       border: 1px solid var(--border);
-      border-radius: 18px;
+      border-radius: var(--radius);
       padding: 20px;
-      box-shadow: var(--shadow);
-      margin-bottom: 20px;
+      box-shadow: var(--shadow-sm);
+      margin-bottom: 16px;
     }
-
-    .card h2 {
-      margin: 0 0 15px;
-      font-size: 22px;
+    .card-title {
+      display: flex; align-items: center; justify-content: space-between;
+      gap: 10px; margin-bottom: 16px; flex-wrap: wrap;
     }
+    .card-title h2 { font-size: 17px; font-weight: 700; }
+    .card-title h3 { font-size: 15px; font-weight: 700; }
 
-    .card h3 {
-      margin: 0 0 12px;
-      font-size: 18px;
+    /* ── Badges ── */
+    .badge {
+      display: inline-flex; align-items: center; gap: 5px;
+      padding: 4px 10px; border-radius: 999px;
+      font-size: 12px; font-weight: 600; white-space: nowrap;
     }
+    .badge-blue   { background: var(--primary-light); color: var(--primary-dark); }
+    .badge-green  { background: var(--success-light); color: #166534; }
+    .badge-red    { background: var(--danger-light);  color: #991b1b; }
+    .badge-yellow { background: var(--warning-light); color: #92400e; }
+    .badge-dot::before { content:''; display:inline-block; width:6px; height:6px; border-radius:50%; background: currentColor; }
 
-    label {
-      display: block;
-      font-weight: bold;
-      margin: 14px 0 7px;
+    /* ── Form elements ── */
+    label { display: block; font-weight: 600; font-size: 13px; color: var(--text-muted); margin: 14px 0 6px; text-transform: uppercase; letter-spacing: .04em; }
+    input, select, textarea {
+      width: 100%; padding: 10px 12px;
+      border: 1.5px solid var(--border);
+      border-radius: var(--radius-sm);
+      font-size: 14px; font-family: var(--font);
+      background: white; color: var(--text);
+      transition: border-color 0.15s, box-shadow 0.15s;
     }
-
-    input,
-    select,
-    textarea {
-      width: 100%;
-      padding: 12px 14px;
-      border: 1px solid #d1d5db;
-      border-radius: 12px;
-      font-size: 15px;
-      background: white;
-      color: var(--text);
-    }
-
-    textarea {
-      min-height: 130px;
-      resize: vertical;
-      line-height: 1.7;
-    }
-
-    input:focus,
-    select:focus,
-    textarea:focus {
+    textarea { min-height: 130px; resize: vertical; line-height: 1.7; }
+    input:focus, select:focus, textarea:focus {
       outline: none;
       border-color: var(--primary);
-      box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.15);
+      box-shadow: 0 0 0 3px rgba(37,99,235,0.1);
     }
+    .row { display: grid; grid-template-columns: repeat(2,1fr); gap: 14px; }
+    @media (max-width: 700px) { .row { grid-template-columns: 1fr; } }
 
-    .row {
-      display: grid;
-      grid-template-columns: repeat(2, 1fr);
-      gap: 14px;
+    /* ── SMS dual panels ── */
+    .sms-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
+    @media (max-width: 900px) { .sms-grid { grid-template-columns: 1fr; } }
+
+    .lang-panel {
+      border: 1.5px solid var(--border);
+      border-radius: var(--radius);
+      padding: 16px;
+      background: #fafcff;
     }
+    .lang-panel.ar { direction: rtl; }
+    .lang-panel.en { direction: ltr; }
+    .lang-panel textarea, .lang-panel input { direction: inherit; text-align: start; }
 
-    @media (max-width: 700px) {
-      .row {
-        grid-template-columns: 1fr;
-      }
-    }
-
-    .section-title {
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      gap: 10px;
-      margin-bottom: 12px;
-    }
-
-    .badge {
-      display: inline-block;
-      padding: 6px 10px;
-      border-radius: 999px;
-      font-size: 13px;
-      font-weight: bold;
-      white-space: nowrap;
-    }
-
-    .badge-blue {
-      background: var(--soft-blue);
-      color: var(--primary-dark);
-    }
-
-    .badge-green {
-      background: var(--soft-green);
-      color: var(--success);
-    }
-
-    .badge-red {
-      background: var(--soft-red);
-      color: var(--danger);
-    }
-
-    .badge-yellow {
-      background: var(--soft-yellow);
-      color: #92400e;
-    }
-
+    /* ── Stats ── */
     .stats-grid {
       display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(155px, 1fr));
-      gap: 12px;
-      margin-top: 15px;
+      grid-template-columns: repeat(auto-fit, minmax(100px, 1fr));
+      gap: 8px; margin-top: 12px;
     }
-
     .stat {
-      background: #f9fafb;
-      border: 1px solid var(--border);
-      border-radius: 14px;
+      background: var(--bg);
+      border: 1.5px solid var(--border);
+      border-radius: var(--radius-sm);
+      padding: 10px 12px;
+    }
+    .stat .lbl { font-size: 11px; font-weight: 600; color: var(--text-muted); text-transform: uppercase; letter-spacing: .05em; margin-bottom: 4px; }
+    .stat .val { font-size: 20px; font-weight: 700; color: var(--primary-dark); font-family: var(--mono); direction: ltr; text-align: start; }
+    .stat.success .val { color: var(--success); }
+
+    /* ── Cost Optimizer ── */
+    .optimizer-card {
+      background: linear-gradient(135deg, #f0f9ff, #eff6ff);
+      border: 1.5px solid #bae6fd;
+      border-radius: var(--radius);
+      padding: 20px;
+      margin-bottom: 16px;
+    }
+    .optimizer-title {
+      display: flex; align-items: center; gap: 8px;
+      font-size: 17px; font-weight: 700; color: #0c4a6e;
+      margin-bottom: 16px;
+    }
+    .optimizer-title .icon {
+      width: 32px; height: 32px; border-radius: 8px;
+      background: linear-gradient(135deg, #0ea5e9, #2563eb);
+      display: flex; align-items: center; justify-content: center;
+      font-size: 16px; flex-shrink: 0;
+    }
+    .tips-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 10px; }
+    .tip-card {
+      background: white;
+      border: 1.5px solid var(--border);
+      border-radius: var(--radius-sm);
       padding: 14px;
+      position: relative;
+      overflow: hidden;
+    }
+    .tip-card::before {
+      content: '';
+      position: absolute; top: 0; right: 0; left: 0;
+      height: 3px;
+    }
+    .tip-card.saving::before { background: linear-gradient(90deg, #16a34a, #22c55e); }
+    .tip-card.warning::before { background: linear-gradient(90deg, #d97706, #f59e0b); }
+    .tip-card.info::before { background: linear-gradient(90deg, #2563eb, #38bdf8); }
+    .tip-card.danger::before { background: linear-gradient(90deg, #dc2626, #f87171); }
+
+    .tip-label {
+      font-size: 11px; font-weight: 700; text-transform: uppercase;
+      letter-spacing: .06em; margin-bottom: 6px;
+    }
+    .tip-card.saving .tip-label { color: var(--success); }
+    .tip-card.warning .tip-label { color: var(--warning); }
+    .tip-card.info .tip-label { color: var(--primary); }
+    .tip-card.danger .tip-label { color: var(--danger); }
+
+    .tip-text { font-size: 13px; line-height: 1.6; color: var(--text); }
+    .tip-saving-amount {
+      margin-top: 8px; padding: 6px 10px;
+      background: var(--success-light);
+      border-radius: var(--radius-xs);
+      font-size: 13px; font-weight: 700; color: #166534;
+      font-family: var(--mono); direction: ltr; text-align: start;
     }
 
-    .stat .label {
-      color: var(--muted);
-      font-size: 13px;
-      margin-bottom: 6px;
+    .cost-breakdown {
+      background: white;
+      border: 1.5px solid var(--border);
+      border-radius: var(--radius-sm);
+      padding: 14px;
+      margin-top: 12px;
     }
-
-    .stat .value {
-      font-weight: bold;
-      font-size: 22px;
-      color: var(--primary-dark);
-      direction: ltr;
-      text-align: right;
-      word-break: break-word;
+    .cost-breakdown-title { font-size: 13px; font-weight: 700; color: var(--text-muted); margin-bottom: 10px; text-transform: uppercase; letter-spacing: .04em; }
+    .cost-row {
+      display: flex; justify-content: space-between; align-items: center;
+      padding: 6px 0; border-bottom: 1px solid var(--border); font-size: 13px;
     }
+    .cost-row:last-child { border-bottom: none; font-weight: 700; font-size: 14px; }
+    .cost-row .cost-val { font-family: var(--mono); color: var(--primary-dark); }
+    .cost-row.total .cost-val { color: #0f172a; font-size: 15px; }
 
-    html[dir="ltr"] .stat .value {
-      text-align: left;
-    }
-
-    .stat.success .value {
-      color: var(--success);
-    }
-
+    /* ── Total sidebar card ── */
     .total-card {
-      background: linear-gradient(135deg, #eff6ff, #ffffff);
-      border: 1px solid #bfdbfe;
-      text-align: center;
+      background: linear-gradient(160deg, #1e3a8a, #1d4ed8);
+      border: none;
+      border-radius: var(--radius);
+      padding: 24px;
+      color: white;
+      position: sticky; top: 20px; z-index: 3;
+      box-shadow: var(--shadow-lg);
+      margin-bottom: 16px;
     }
-
-    .total-card .total-label {
-      color: #334155;
-      font-weight: bold;
-      margin-bottom: 10px;
+    .total-label { font-size: 12px; font-weight: 600; opacity: 0.75; text-transform: uppercase; letter-spacing: .06em; margin-bottom: 8px; }
+    .total-value { font-size: 36px; font-weight: 700; font-family: var(--mono); direction: ltr; letter-spacing: -1px; }
+    .total-breakdown { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; margin-top: 16px; }
+    .mini-total {
+      background: rgba(255,255,255,0.1);
+      border-radius: var(--radius-sm);
+      padding: 10px 12px;
+      backdrop-filter: blur(4px);
     }
+    .mini-total span { display: block; font-size: 11px; opacity: 0.7; font-weight: 600; text-transform: uppercase; letter-spacing: .04em; }
+    .mini-total strong { display: block; font-size: 16px; font-weight: 700; margin-top: 4px; font-family: var(--mono); direction: ltr; }
 
-    .total-card .total-value {
-      direction: ltr;
-      font-size: 36px;
-      font-weight: 900;
-      color: #1d4ed8;
-      word-break: break-word;
-    }
-
-    .hidden {
-      display: none !important;
-    }
-
-    .alerts {
-      display: grid;
-      gap: 10px;
-      margin-top: 15px;
-    }
-
+    /* ── Alerts ── */
+    .alerts { display: grid; gap: 8px; margin-top: 12px; }
     .alert {
-      padding: 12px 14px;
-      border-radius: 12px;
-      border: 1px solid;
-      font-size: 14px;
-      line-height: 1.7;
+      padding: 10px 14px;
+      border-radius: var(--radius-sm);
+      border: 1.5px solid;
+      font-size: 13px; line-height: 1.6;
+    }
+    .alert.info    { background: var(--info-light);    border-color: #bae6fd;  color: #0c4a6e; }
+    .alert.success { background: var(--success-light); border-color: #bbf7d0;  color: #166534; }
+    .alert.warning { background: var(--warning-light); border-color: #fde68a;  color: #78350f; }
+    .alert.danger  { background: var(--danger-light);  border-color: #fecaca;  color: #991b1b; font-weight: 700; }
+    .alert.blocker {
+      background: #450a0a; border-color: #7f1d1d;
+      color: white; font-weight: 700; font-size: 14px;
+      box-shadow: 0 4px 16px rgba(220,38,38,0.2);
     }
 
-    .alert.info {
-      background: var(--soft-blue);
-      border-color: #bfdbfe;
-      color: #1e3a8a;
+    /* ── Spellcheck ── */
+    .spell-box {
+      margin-top: 10px; padding: 10px 14px;
+      background: #fffbeb; border: 1.5px solid #fde68a;
+      border-radius: var(--radius-sm);
     }
+    .spell-title { font-size: 12px; font-weight: 700; color: #b45309; margin-bottom: 8px; text-transform: uppercase; letter-spacing: .04em; }
+    .spell-errors { display: flex; flex-wrap: wrap; gap: 6px; }
+    .spell-badge {
+      background: white; border: 1.5px solid #fcd34d;
+      padding: 3px 8px; border-radius: var(--radius-xs);
+      font-size: 13px; cursor: pointer; transition: all 0.15s;
+      font-family: var(--mono);
+    }
+    .spell-badge:hover { background: #fef3c7; border-color: #f59e0b; }
+    .spell-badge .wrong { color: var(--danger); text-decoration: line-through; margin-inline-start: 4px; }
+    .spell-badge .right { color: var(--success); font-weight: 700; }
 
-    .alert.success {
-      background: var(--soft-green);
-      border-color: #bbf7d0;
-      color: #166534;
+    /* ── Checklist ── */
+    .checklist { display: grid; gap: 8px; }
+    .check-item {
+      display: flex; align-items: center; gap: 10px;
+      padding: 10px 12px; border: 1.5px solid var(--border);
+      border-radius: var(--radius-sm); background: var(--bg);
+      font-size: 13px;
     }
+    .check-item.blocked { background: var(--danger-light); border-color: #fca5a5; color: #991b1b; font-weight: 700; }
+    html[dir="rtl"] .check-item { flex-direction: row-reverse; }
+    .check-icon {
+      width: 22px; height: 22px; border-radius: 50%;
+      display: inline-grid; place-items: center;
+      font-size: 12px; font-weight: 700; flex-shrink: 0;
+    }
+    .check-icon.ok   { background: var(--success-light); color: var(--success); }
+    .check-icon.warn { background: var(--warning-light); color: var(--warning); }
+    .check-icon.bad  { background: var(--danger-light);  color: var(--danger); }
 
-    .alert.warning {
-      background: var(--soft-yellow);
-      border-color: #fde68a;
-      color: #92400e;
+    /* ── Preview ── */
+    .preview-switch {
+      display: flex; gap: 4px;
+      background: var(--bg); padding: 4px;
+      border-radius: 999px; margin-bottom: 16px;
+      justify-content: center; border: 1.5px solid var(--border);
     }
-
-    .alert.danger {
-      background: var(--soft-red);
-      border-color: #fecaca;
-      color: #991b1b;
+    .preview-switch button {
+      padding: 7px 16px; border-radius: 999px;
+      background: transparent; color: var(--text-muted);
+      border: 0; cursor: pointer; font-weight: 600; font-size: 13px;
+      transition: all 0.18s; font-family: var(--font);
     }
-
-    .preview-wrapper {
-      display: grid;
-      gap: 20px;
-    }
+    .preview-switch button.active { background: var(--primary); color: white; }
 
     .phone {
-      width: 100%;
-      max-width: var(--device-width);
-      margin: 0 auto;
-      border: 10px solid #111827;
-      border-radius: 34px;
-      background: #f9fafb;
-      overflow: hidden;
-      box-shadow: 0 20px 40px rgba(0,0,0,0.18);
+      width: 100%; max-width: 340px; margin: 0 auto;
+      border: 8px solid #1e293b;
+      border-radius: 30px; overflow: hidden;
+      box-shadow: 0 16px 40px rgba(0,0,0,0.15);
     }
-
-    .phone-screen {
-      background: #f9fafb;
-      min-height: 190px;
-    }
-
-    .phone-top {
-      background: #111827;
-      color: white;
-      text-align: center;
-      padding: 9px;
-      font-size: 12px;
-      font-weight: bold;
-    }
-
-    .sms-area {
-      padding: 18px;
-    }
-
+    .phone-bar { background: #1e293b; color: white; text-align: center; padding: 8px; font-size: 11px; font-weight: 700; }
+    .sms-screen { background: #f1f5f9; padding: 16px; min-height: 180px; }
     .sms-bubble {
-      background: #dbeafe;
-      color: #111827;
-      padding: 14px;
-      border-radius: 18px 18px 4px 18px;
-      line-height: 1.6;
-      min-height: 60px;
-      white-space: pre-wrap;
-      word-break: break-word;
-      max-width: 78%;
-      margin-inline-start: auto;
-      text-align: start;
+      padding: 12px 14px; line-height: 1.6;
+      min-height: 50px; white-space: pre-wrap; word-break: break-word;
+      max-width: 80%; font-size: 13px; border-radius: 16px;
     }
-
-    html[dir="ltr"] .sms-bubble {
-      margin-left: auto;
-      margin-right: 0;
-      border-radius: 18px 18px 18px 4px;
+    .sms-bubble.ar { background: #dbeafe; direction: rtl; margin-right: auto; margin-left: 0; border-radius: 16px 16px 4px 16px; }
+    .sms-bubble.en { background: #dcfce7; direction: ltr; margin-left: auto; margin-right: 0; border-radius: 16px 16px 16px 4px; }
+    .push-screen { background: #f1f5f9; padding: 16px; min-height: 180px; }
+    .push-card {
+      background: white; border-radius: 14px; padding: 12px;
+      box-shadow: 0 4px 16px rgba(0,0,0,0.1); font-size: 13px;
     }
+    .push-card.ar { direction: rtl; }
+    .push-card.en { direction: ltr; }
+    .push-app { font-size: 11px; color: var(--text-muted); margin-bottom: 4px; }
+    .push-title { font-weight: 700; margin-bottom: 4px; font-size: 13px; }
+    .push-body { color: #374151; font-size: 12px; line-height: 1.5; }
 
-    html[dir="rtl"] .sms-bubble {
-      margin-right: auto;
-      margin-left: 0;
-      border-radius: 18px 18px 4px 18px;
+    /* ── Summary ── */
+    .summary-tabs { display: flex; gap: 6px; flex-wrap: wrap; margin-bottom: 12px; }
+    .summary-tabs button {
+      background: var(--bg); color: var(--text);
+      border: 1.5px solid var(--border); border-radius: var(--radius-xs);
+      padding: 6px 12px; font-size: 13px; font-weight: 600;
+      cursor: pointer; transition: all 0.15s; font-family: var(--font);
     }
-
-    .push-area {
-      padding: 18px;
-      background: #f3f4f6;
-      min-height: 180px;
-    }
-
-    .push-preview {
-      background: white;
-      border-radius: 18px;
-      padding: 14px;
-      box-shadow: 0 8px 20px rgba(0,0,0,0.12);
-      width: 100%;
-      text-align: start;
-    }
-
-    .push-app {
-      font-size: 12px;
-      color: var(--muted);
-      margin-bottom: 8px;
-    }
-
-    .push-title {
-      font-weight: bold;
-      margin-bottom: 6px;
-      word-break: break-word;
-    }
-
-    .push-body {
-      color: #374151;
-      font-size: 14px;
-      line-height: 1.5;
-      word-break: break-word;
-    }
-
+    .summary-tabs button.active { background: var(--primary); color: white; border-color: var(--primary); }
     .summary-box {
-      background: #f8fafc;
-      border: 1px dashed #cbd5e1;
-      border-radius: 14px;
-      padding: 15px;
-      white-space: pre-wrap;
-      line-height: 1.7;
-      direction: ltr;
-      text-align: left;
-      font-family: Consolas, monospace;
-      font-size: 14px;
-      max-height: 360px;
-      overflow: auto;
+      background: #0f172a; color: #e2e8f0;
+      border-radius: var(--radius-sm);
+      padding: 16px; white-space: pre-wrap;
+      font-family: var(--mono); font-size: 12px; line-height: 1.8;
+      direction: ltr; text-align: left;
+      max-height: 340px; overflow: auto;
     }
 
-    .buttons {
-      display: flex;
-      gap: 10px;
-      flex-wrap: wrap;
-      margin-top: 14px;
-    }
+    /* ── Buttons ── */
+    .buttons { display: flex; gap: 8px; flex-wrap: wrap; margin-top: 14px; }
+    button { border: none; cursor: pointer; font-family: var(--font); font-weight: 600; transition: all 0.15s; }
+    .btn { padding: 10px 16px; border-radius: var(--radius-xs); font-size: 13px; }
+    .btn-primary  { background: var(--primary);  color: white; }
+    .btn-success  { background: var(--success);  color: white; }
+    .btn-danger   { background: var(--danger);   color: white; }
+    .btn-secondary{ background: var(--bg); color: var(--text); border: 1.5px solid var(--border); }
+    .btn-mini     { padding: 7px 12px; font-size: 12px; }
+    .btn:hover { filter: brightness(1.08); transform: translateY(-1px); }
+    .btn:active { transform: translateY(0); }
 
-    button {
-      border: none;
-      padding: 12px 16px;
-      border-radius: 12px;
-      font-weight: bold;
-      cursor: pointer;
-      font-size: 14px;
-    }
+    .hidden { display: none !important; }
 
-    .btn-primary {
-      background: var(--primary);
-      color: white;
+    /* ── Optimization panel in sidebar ── */
+    .opt-panel { display: grid; gap: 8px; }
+    .opt-item {
+      padding: 10px 14px; border-radius: var(--radius-sm);
+      border: 1.5px solid; font-size: 13px; line-height: 1.6;
     }
+    .opt-item.success { background: var(--success-light); border-color: #bbf7d0; color: #166534; }
+    .opt-item.warning { background: var(--warning-light); border-color: #fde68a; color: #78350f; }
+    .opt-item.danger  { background: var(--danger-light);  border-color: #fecaca; color: #991b1b; font-weight: 700; }
+    .opt-item.info    { background: var(--info-light);    border-color: #bae6fd; color: #0c4a6e; }
 
-    .btn-primary:hover {
-      background: var(--primary-dark);
-    }
-
-    .btn-success {
-      background: var(--success);
-      color: white;
-    }
-
-    .btn-danger {
-      background: var(--danger);
-      color: white;
-    }
-
-    .btn-secondary {
-      background: #e5e7eb;
-      color: #111827;
-    }
-
-    .footer-note {
-      color: var(--muted);
-      font-size: 13px;
-      text-align: center;
-      margin-top: 25px;
-    }
+    .footer { text-align: center; color: var(--text-muted); font-size: 12px; margin-top: 24px; }
   </style>
 </head>
-
 <body>
-  <div class="app">
-    <div class="hero">
-      <div class="hero-top">
-        <div>
-          <h1 data-i18n="appTitle">Marketing Campaign Studio 🚀</h1>
-          <p data-i18n="appDescription">
-            أداة داخلية لتجهيز الحملات التسويقية، حساب تكلفة SMS، فحص Push Notification،
-            وإصدار ملخص نهائي قابل للنسخ.
-          </p>
-        </div>
+<div class="app">
 
-        <div class="language-switch">
-          <button id="btnAr" class="active" onclick="setLanguage('ar')">عربي</button>
-          <button id="btnEn" onclick="setLanguage('en')">English</button>
-        </div>
+  <!-- Hero -->
+  <div class="hero">
+    <div class="hero-top">
+      <div>
+        <h1 data-i18n="appTitle">Marketing Campaign Studio Pro ✨</h1>
+        <p data-i18n="appDescription">أداة احترافية لتجهيز حملات SMS وPush باللغتين، حساب التكلفة، تحسينها، معاينة الجوال، وتدقيق إملائي ذكي.</p>
       </div>
-    </div>
-
-    <select id="currency" class="hidden">
-      <option value="SAR" selected>SAR</option>
-    </select>
-
-    <div class="grid">
-      <main>
-        <section id="smsSection" class="card">
-          <div class="section-title">
-            <h2 data-i18n="smsBuilder">SMS Builder</h2>
-            <span id="smsLanguageBadge" class="badge badge-blue">Auto Detect</span>
-          </div>
-
-          <div class="row">
-            <div>
-              <label for="recipients" data-i18n="recipients">عدد المستلمين</label>
-              <input id="recipients" type="number" min="0" value="1" oninput="calculateAll()" />
-            </div>
-
-            <div>
-              <label for="smsLanguageMode" data-i18n="languageMode">طريقة تحديد اللغة</label>
-              <select id="smsLanguageMode" onchange="calculateAll()">
-                <option value="auto" data-i18n="auto">تلقائي</option>
-                <option value="arabic" data-i18n="arabicOption">عربي - 70 حرف لكل جزء</option>
-                <option value="english" data-i18n="englishOption">إنجليزي - 120 حرف لكل جزء</option>
-              </select>
-            </div>
-          </div>
-
-          <div class="row">
-            <div>
-              <label for="costPerPartSelect" data-i18n="costPerPart">تكلفة جزء SMS</label>
-              <select id="costPerPartSelect" onchange="handleCostSelection(); calculateAll();">
-                <option value="0.0365">0.0365</option>
-                <option value="custom" data-i18n="custom">Custom</option>
-              </select>
-            </div>
-
-            <div id="customCostWrapper" class="hidden">
-              <label for="customCostPerPart" data-i18n="customCost">تكلفة مخصصة لكل جزء SMS</label>
-              <input
-                id="customCostPerPart"
-                type="number"
-                min="0"
-                step="any"
-                data-i18n-placeholder="customCostPlaceholder"
-                placeholder="مثال: 0.045"
-                oninput="calculateAll()"
-              />
-            </div>
-          </div>
-
-          <label for="smsText" data-i18n="smsText">نص رسالة SMS</label>
-          <textarea
-            id="smsText"
-            data-i18n-placeholder="smsPlaceholder"
-            placeholder="اكتب نص الرسالة هنا..."
-            oninput="calculateAll()"
-          ></textarea>
-
-          <div class="stats-grid">
-            <div class="stat">
-              <div class="label" data-i18n="characters">عدد الحروف</div>
-              <div id="smsCharacters" class="value">0</div>
-            </div>
-
-            <div class="stat">
-              <div class="label" data-i18n="charactersPerPart">الحروف لكل جزء</div>
-              <div id="charactersPerPart" class="value">70</div>
-            </div>
-
-            <div class="stat">
-              <div class="label" data-i18n="partsPerRecipient">الأجزاء لكل مستلم</div>
-              <div id="smsParts" class="value">0</div>
-            </div>
-
-            <div class="stat">
-              <div class="label" data-i18n="totalSmsUnits">إجمالي وحدات SMS</div>
-              <div id="totalSmsUnits" class="value">0</div>
-            </div>
-
-            <div class="stat">
-              <div class="label" data-i18n="costPartLabel">تكلفة الجزء</div>
-              <div id="displayCostPerPart" class="value">0.0365</div>
-            </div>
-
-            <div class="stat success">
-              <div class="label" data-i18n="smsCost">تكلفة SMS</div>
-              <div id="smsTotalCost" class="value">0</div>
-            </div>
-          </div>
-
-          <div id="smsAlerts" class="alerts"></div>
-        </section>
-
-        <section id="pushSection" class="card">
-          <div class="section-title">
-            <h2 data-i18n="pushBuilder">Push Notification Builder</h2>
-            <span id="pushStatusBadge" class="badge badge-green">Valid</span>
-          </div>
-
-          <div class="row">
-            <div>
-              <label for="maxTitle" data-i18n="maxTitle">الحد الأقصى لحروف العنوان</label>
-              <input id="maxTitle" type="number" min="1" value="34" oninput="calculateAll()" />
-            </div>
-
-            <div>
-              <label for="maxBody" data-i18n="maxBody">الحد الأقصى لحروف النص</label>
-              <input id="maxBody" type="number" min="1" value="150" oninput="calculateAll()" />
-            </div>
-          </div>
-
-          <label for="pushTitle" data-i18n="pushTitle">عنوان الإشعار</label>
-          <input
-            id="pushTitle"
-            type="text"
-            data-i18n-placeholder="pushTitlePlaceholder"
-            placeholder="مثال: عرض خاص لك"
-            oninput="calculateAll()"
-          />
-
-          <label for="pushBody" data-i18n="pushBody">نص الإشعار</label>
-          <textarea
-            id="pushBody"
-            data-i18n-placeholder="pushBodyPlaceholder"
-            placeholder="اكتب نص إشعار Push هنا..."
-            oninput="calculateAll()"
-          ></textarea>
-
-          <div class="stats-grid">
-            <div class="stat">
-              <div class="label" data-i18n="titleCharacters">حروف العنوان</div>
-              <div id="titleCharacters" class="value">0</div>
-            </div>
-
-            <div class="stat">
-              <div class="label" data-i18n="titleRemaining">المتبقي للعنوان</div>
-              <div id="titleRemaining" class="value">34</div>
-            </div>
-
-            <div class="stat">
-              <div class="label" data-i18n="bodyCharacters">حروف النص</div>
-              <div id="bodyCharacters" class="value">0</div>
-            </div>
-
-            <div class="stat">
-              <div class="label" data-i18n="bodyRemaining">المتبقي للنص</div>
-              <div id="bodyRemaining" class="value">150</div>
-            </div>
-          </div>
-
-          <div id="pushAlerts" class="alerts"></div>
-        </section>
-      </main>
-
-      <aside>
-        <section class="card total-card">
-          <div class="total-label" data-i18n="expectedTotalCost">إجمالي التكلفة المتوقعة</div>
-          <div id="grandTotalCost" class="total-value">0 SAR</div>
-        </section>
-
-        <section class="card">
-          <h2 data-i18n="mobilePreview">معاينة الجوال</h2>
-
-          <div class="preview-wrapper">
-            <div id="smsPreviewBox">
-              <h3>SMS Preview</h3>
-              <div class="phone">
-                <div class="phone-top">SMS</div>
-                <div class="phone-screen sms-area">
-                  <div id="smsPreview" class="sms-bubble">سيظهر نص SMS هنا...</div>
-                </div>
-              </div>
-            </div>
-
-            <div id="pushPreviewBox">
-              <h3>Push Preview</h3>
-              <div class="phone">
-                <div class="phone-top">Notification</div>
-                <div class="phone-screen push-area">
-                  <div class="push-preview">
-                    <div class="push-app">Your App</div>
-                    <div id="pushPreviewTitle" class="push-title">عنوان الإشعار</div>
-                    <div id="pushPreviewBody" class="push-body">نص الإشعار سيظهر هنا...</div>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
-        </section>
-
-        <section class="card">
-          <h2 data-i18n="campaignSummary">ملخص الحملة</h2>
-
-          <div id="campaignSummaryBox" class="summary-box"></div>
-
-          <div class="buttons">
-            <button class="btn-primary" onclick="copySummary()" data-i18n="copySummary">نسخ الملخص</button>
-            <button class="btn-success" onclick="downloadSummary()" data-i18n="downloadTxt">تحميل TXT</button>
-            <button class="btn-secondary" onclick="fillDemo()" data-i18n="demo">تجربة Demo</button>
-            <button class="btn-danger" onclick="resetForm()" data-i18n="reset">إعادة تعيين</button>
-          </div>
-        </section>
-      </aside>
-    </div>
-
-    <div class="footer-note" data-i18n="footerNote">
-      Marketing Campaign Studio — حسابات تقديرية تساعد الفريق قبل الإرسال النهائي.
+      <div class="lang-switcher">
+        <button id="btnAr" class="active" onclick="App.setLanguage('ar')">عربي</button>
+        <button id="btnEn" onclick="App.setLanguage('en')">English</button>
+      </div>
     </div>
   </div>
 
-  <script>
-    let currentLanguage = "ar";
+  <div class="main-grid">
+    <main>
 
-    const i18n = {
-      ar: {
-        appTitle: "Marketing Campaign Studio 🚀",
-        appDescription: "أداة داخلية لتجهيز الحملات التسويقية، حساب تكلفة SMS، فحص Push Notification، وإصدار ملخص نهائي قابل للنسخ.",
-        smsBuilder: "SMS Builder",
-        pushBuilder: "Push Notification Builder",
-        recipients: "عدد المستلمين",
-        languageMode: "طريقة تحديد اللغة",
-        auto: "تلقائي",
-        arabicOption: "عربي - 70 حرف لكل جزء",
-        englishOption: "إنجليزي - 120 حرف لكل جزء",
-        costPerPart: "تكلفة جزء SMS",
-        custom: "Custom",
-        customCost: "تكلفة مخصصة لكل جزء SMS",
-        customCostPlaceholder: "مثال: 0.045",
-        smsText: "نص رسالة SMS",
-        smsPlaceholder: "اكتب نص الرسالة هنا...",
-        characters: "عدد الحروف",
-        charactersPerPart: "الحروف لكل جزء",
-        partsPerRecipient: "الأجزاء لكل مستلم",
-        totalSmsUnits: "إجمالي وحدات SMS",
-        costPartLabel: "تكلفة الجزء",
-        smsCost: "تكلفة SMS",
-        maxTitle: "الحد الأقصى لحروف العنوان",
-        maxBody: "الحد الأقصى لحروف النص",
-        pushTitle: "عنوان الإشعار",
-        pushTitlePlaceholder: "مثال: عرض خاص لك",
-        pushBody: "نص الإشعار",
-        pushBodyPlaceholder: "اكتب نص إشعار Push هنا...",
-        titleCharacters: "حروف العنوان",
-        titleRemaining: "المتبقي للعنوان",
-        bodyCharacters: "حروف النص",
-        bodyRemaining: "المتبقي للنص",
-        expectedTotalCost: "إجمالي التكلفة المتوقعة",
-        mobilePreview: "معاينة الجوال",
-        campaignSummary: "ملخص الحملة",
-        copySummary: "نسخ الملخص",
-        downloadTxt: "تحميل TXT",
-        demo: "تجربة Demo",
-        reset: "إعادة تعيين",
-        footerNote: "Marketing Campaign Studio — حسابات تقديرية تساعد الفريق قبل الإرسال النهائي.",
-        smsPreviewEmpty: "سيظهر نص SMS هنا...",
-        pushTitleEmpty: "عنوان الإشعار",
-        pushBodyEmpty: "نص الإشعار سيظهر هنا...",
-        valid: "صالح",
-        exceeded: "متجاوز",
-        arabic: "عربي",
-        english: "إنجليزي",
-        mixed: "مختلط / Unicode",
-        alertSmsEmpty: "اكتب نص SMS حتى يتم حساب الأجزاء والتكلفة.",
-        alertMixed: "النص يحتوي على عربي وإنجليزي. غالبًا سيتم احتسابه كـ Unicode، لذلك تم استخدام حد 70 حرف لكل جزء.",
-        alertUrlSms: "تم اكتشاف رابط داخل الرسالة. تأكد أن الرابط قصير وصحيح قبل الإرسال.",
-        alertEmoji: "تم اكتشاف Emoji. في بعض أنظمة SMS قد يؤثر ذلك على الترميز وعدد الأجزاء.",
-        alertSpaces: "يوجد مسافات زائدة أو مسافات متكررة. تنظيف النص قد يقلل عدد الحروف.",
-        alertLong: "الرسالة طويلة وتساوي {parts} أجزاء لكل مستلم. راجع النص لتقليل التكلفة.",
-        alertTwoParts: "الرسالة تساوي جزأين لكل مستلم. تقليل النص قد يخفض التكلفة.",
-        alertOnePart: "SMS جيد: الرسالة داخل جزء واحد لكل مستلم.",
-        savingAlert: "لو تم تقليل <b>{chars}</b> حرف، ستنخفض الرسالة من <b>{current}</b> أجزاء إلى <b>{target}</b> أجزاء لكل مستلم.<br>التكلفة الحالية: <b>{currentCost}</b><br>التكلفة بعد التقليل: <b>{targetCost}</b><br>التوفير المتوقع: <b>{saving}</b>.",
-        pushTitleEmptyAlert: "عنوان Push فارغ.",
-        pushBodyEmptyAlert: "نص Push فارغ.",
-        pushTitleExceeded: "عنوان Push تجاوز الحد بـ <b>{count}</b> حرف.",
-        pushBodyExceeded: "نص Push تجاوز الحد بـ <b>{count}</b> حرف.",
-        pushTitleValid: "عنوان Push ضمن الحد. المتبقي: <b>{count}</b> حرف.",
-        pushBodyValid: "نص Push ضمن الحد. المتبقي: <b>{count}</b> حرف.",
-        pushUrlAlert: "تم اكتشاف رابط في نص Push. تأكد أنه واضح ومختصر.",
-        copied: "تم نسخ ملخص الحملة بنجاح.",
-        copyFailed: "لم يتم النسخ تلقائيًا. يمكنك تحديد الملخص ونسخه يدويًا.",
-        resetConfirm: "هل تريد إعادة تعيين جميع البيانات؟",
-        summaryTitle: "MARKETING CAMPAIGN SUMMARY",
-        summaryRecipients: "Recipients",
-        summarySmsDetails: "SMS DETAILS",
-        summaryDetectedLanguage: "Detected Language",
-        summaryBillingLanguage: "Billing Language",
-        summaryCharacters: "Characters",
-        summaryCharactersPerPart: "Characters Per Part",
-        summaryPartsPerRecipient: "Parts Per Recipient",
-        summaryTotalSmsUnits: "Total SMS Units",
-        summaryCostPerPart: "Cost Per Part",
-        summarySmsCost: "SMS Estimated Cost",
-        summaryPushDetails: "PUSH NOTIFICATION DETAILS",
-        summaryTitleCharacters: "Title Characters",
-        summaryBodyCharacters: "Body Characters",
-        summaryTitleStatus: "Title Status",
-        summaryBodyStatus: "Body Status",
-        summaryTotal: "TOTAL SUMMARY",
-        summaryTotalCost: "Total Estimated Cost"
-      },
-      en: {
-        appTitle: "Marketing Campaign Studio 🚀",
-        appDescription: "Internal tool for preparing marketing campaigns, calculating SMS cost, validating push notifications, and generating a copy-ready final summary.",
-        smsBuilder: "SMS Builder",
-        pushBuilder: "Push Notification Builder",
-        recipients: "Recipients",
-        languageMode: "Language Mode",
-        auto: "Auto Detect",
-        arabicOption: "Arabic - 70 characters per part",
-        englishOption: "English - 120 characters per part",
-        costPerPart: "SMS Cost Per Part",
-        custom: "Custom",
-        customCost: "Custom SMS Cost Per Part",
-        customCostPlaceholder: "Example: 0.045",
-        smsText: "SMS Text",
-        smsPlaceholder: "Enter SMS message here...",
-        characters: "Characters",
-        charactersPerPart: "Characters Per Part",
-        partsPerRecipient: "Parts Per Recipient",
-        totalSmsUnits: "Total SMS Units",
-        costPartLabel: "Cost Per Part",
-        smsCost: "SMS Cost",
-        maxTitle: "Maximum Title Characters",
-        maxBody: "Maximum Body Characters",
-        pushTitle: "Push Title",
-        pushTitlePlaceholder: "Example: Special offer for you",
-        pushBody: "Push Body",
-        pushBodyPlaceholder: "Enter push notification body here...",
-        titleCharacters: "Title Characters",
-        titleRemaining: "Title Remaining",
-        bodyCharacters: "Body Characters",
-        bodyRemaining: "Body Remaining",
-        expectedTotalCost: "Expected Total Cost",
-        mobilePreview: "Mobile Preview",
-        campaignSummary: "Campaign Summary",
-        copySummary: "Copy Summary",
-        downloadTxt: "Download TXT",
-        demo: "Demo",
-        reset: "Reset",
-        footerNote: "Marketing Campaign Studio — estimated calculations to support the team before final sending.",
-        smsPreviewEmpty: "SMS text preview will appear here...",
-        pushTitleEmpty: "Push notification title",
-        pushBodyEmpty: "Push notification body will appear here...",
-        valid: "Valid",
-        exceeded: "Exceeded",
-        arabic: "Arabic",
-        english: "English",
-        mixed: "Mixed / Unicode",
-        alertSmsEmpty: "Enter SMS text to calculate parts and cost.",
-        alertMixed: "The message contains Arabic and English. It will likely be billed as Unicode, so 70 characters per part is used.",
-        alertUrlSms: "A link was detected in the SMS. Make sure it is short and correct before sending.",
-        alertEmoji: "Emoji detected. In some SMS systems, emoji may affect encoding and number of parts.",
-        alertSpaces: "Extra spaces or repeated spaces detected. Cleaning the text may reduce character count.",
-        alertLong: "The message is long and equals {parts} parts per recipient. Review the text to reduce cost.",
-        alertTwoParts: "The message equals 2 parts per recipient. Reducing the text may lower the cost.",
-        alertOnePart: "Good SMS: the message is within one part per recipient.",
-        savingAlert: "If you reduce <b>{chars}</b> characters, the message will decrease from <b>{current}</b> parts to <b>{target}</b> parts per recipient.<br>Current cost: <b>{currentCost}</b><br>Cost after reduction: <b>{targetCost}</b><br>Expected saving: <b>{saving}</b>.",
-        pushTitleEmptyAlert: "Push title is empty.",
-        pushBodyEmptyAlert: "Push body is empty.",
-        pushTitleExceeded: "Push title exceeded the limit by <b>{count}</b> characters.",
-        pushBodyExceeded: "Push body exceeded the limit by <b>{count}</b> characters.",
-        pushTitleValid: "Push title is within the limit. Remaining: <b>{count}</b> characters.",
-        pushBodyValid: "Push body is within the limit. Remaining: <b>{count}</b> characters.",
-        pushUrlAlert: "A link was detected in the push body. Make sure it is clear and short.",
-        copied: "Campaign summary copied successfully.",
-        copyFailed: "Automatic copy failed. You can select and copy the summary manually.",
-        resetConfirm: "Do you want to reset all data?",
-        summaryTitle: "MARKETING CAMPAIGN SUMMARY",
-        summaryRecipients: "Recipients",
-        summarySmsDetails: "SMS DETAILS",
-        summaryDetectedLanguage: "Detected Language",
-        summaryBillingLanguage: "Billing Language",
-        summaryCharacters: "Characters",
-        summaryCharactersPerPart: "Characters Per Part",
-        summaryPartsPerRecipient: "Parts Per Recipient",
-        summaryTotalSmsUnits: "Total SMS Units",
-        summaryCostPerPart: "Cost Per Part",
-        summarySmsCost: "SMS Estimated Cost",
-        summaryPushDetails: "PUSH NOTIFICATION DETAILS",
-        summaryTitleCharacters: "Title Characters",
-        summaryBodyCharacters: "Body Characters",
-        summaryTitleStatus: "Title Status",
-        summaryBodyStatus: "Body Status",
-        summaryTotal: "TOTAL SUMMARY",
-        summaryTotalCost: "Total Estimated Cost"
-      }
-    };
+      <!-- Campaign Basics -->
+      <section class="card">
+        <div class="card-title">
+          <h2 data-i18n="campaignBasics">Campaign Inputs</h2>
+        
+        </div>
+        <div class="row">
+          <div>
+            <label for="costPerPartSelect" data-i18n="costPerPart">تكلفة جزء SMS</label>
+            <select id="costPerPartSelect" onchange="App.handleCostSelection()">
+              <option value="0.0365">0.0365</option>
+              <option value="custom" data-i18n="custom">مخصص</option>
+            </select>
+          </div>
+          <div id="customCostWrapper" class="hidden">
+            <label for="customCostInput" data-i18n="customCost">تكلفة مخصصة لكل جزء</label>
+            <input id="customCostInput" type="number" min="0" step="any" placeholder="0.045" oninput="App.queueCalc()" />
+          </div>
+        </div>
+      </section>
 
-    function t(key) {
-      return i18n[currentLanguage][key] || key;
+      <!-- SMS Side by Side -->
+      <section class="card">
+        <div class="card-title">
+          <h2 data-i18n="sideBySideSms">SMS عربي وإنجليزي</h2>
+          <span class="badge badge-green badge-dot" data-i18n="spellcheckOn">مدقق إملائي نشط</span>
+        </div>
+        <div class="sms-grid">
+
+          <!-- Arabic -->
+          <div class="lang-panel ar">
+            <div class="card-title">
+              <h3 data-i18n="arabicSms">SMS عربي</h3>
+            </div>
+            <label for="arRecipients" data-i18n="arabicRecipients">عدد المستلمين</label>
+            <input id="arRecipients" type="number" min="0" value="1"
+              oninput="this.value=Math.max(0,parseInt(this.value)||0); App.queueCalc()" />
+            <label for="smsAr" data-i18n="arabicSmsText">نص الرسالة</label>
+            <textarea id="smsAr" lang="ar" dir="rtl" placeholder="اكتب الرسالة العربية هنا..." oninput="App.queueCalc()"></textarea>
+            <div id="arSpellBox" class="spell-box hidden">
+              <div class="spell-title" data-i18n="spellSuggest">💡 اقتراحات التدقيق</div>
+              <div id="arSpellErrors" class="spell-errors"></div>
+            </div>
+            <div class="buttons">
+              <button class="btn btn-secondary btn-mini" onclick="App.cleanText('smsAr')" data-i18n="cleanArabic">تنظيف النص</button>
+            </div>
+            <div class="stats-grid">
+              <div class="stat"><div class="lbl" data-i18n="characters">حروف</div><div id="arChars" class="val">0</div></div>
+              <div class="stat"><div class="lbl" data-i18n="parts">أجزاء</div><div id="arParts" class="val">0</div></div>
+              <div class="stat"><div class="lbl" data-i18n="units">وحدات</div><div id="arUnits" class="val">0</div></div>
+              <div class="stat success"><div class="lbl" data-i18n="cost">تكلفة</div><div id="arCost" class="val">0</div></div>
+            </div>
+            <div id="arAlerts" class="alerts"></div>
+          </div>
+
+          <!-- English -->
+          <div class="lang-panel en">
+            <div class="card-title">
+              <h3 data-i18n="englishSms">English SMS</h3>
+            </div>
+            <label for="enRecipients" data-i18n="englishRecipients">Recipients</label>
+            <input id="enRecipients" type="number" min="0" value="1"
+              oninput="this.value=Math.max(0,parseInt(this.value)||0); App.queueCalc()" />
+            <label for="smsEn" data-i18n="englishSmsText">SMS Text</label>
+            <textarea id="smsEn" lang="en" dir="ltr" placeholder="Enter English SMS here..." oninput="App.queueCalc()"></textarea>
+            <div id="enSpellBox" class="spell-box hidden">
+              <div class="spell-title">💡 Spellcheck Suggestions</div>
+              <div id="enSpellErrors" class="spell-errors"></div>
+            </div>
+            <div class="buttons">
+              <button class="btn btn-secondary btn-mini" onclick="App.cleanText('smsEn')" data-i18n="cleanEnglish">Clean Text</button>
+            </div>
+            <div class="stats-grid">
+              <div class="stat"><div class="lbl" data-i18n="characters">Chars</div><div id="enChars" class="val">0</div></div>
+              <div class="stat"><div class="lbl" data-i18n="parts">Parts</div><div id="enParts" class="val">0</div></div>
+              <div class="stat"><div class="lbl" data-i18n="units">Units</div><div id="enUnits" class="val">0</div></div>
+              <div class="stat success"><div class="lbl" data-i18n="cost">Cost</div><div id="enCost" class="val">0</div></div>
+            </div>
+            <div id="enAlerts" class="alerts"></div>
+          </div>
+
+        </div>
+      </section>
+
+      <!-- ══ Cost Optimizer ══ -->
+      <section class="optimizer-card" id="costOptimizerSection">
+        <div class="optimizer-title">
+          <div class="icon">💡</div>
+          <span data-i18n="costOptimizerTitle">محسّن التكلفة</span>
+        </div>
+        <div id="optimizerTips" class="tips-grid"></div>
+        <div class="cost-breakdown" id="costBreakdownBox">
+          <div class="cost-breakdown-title" data-i18n="costBreakdownTitle">تفصيل التكلفة</div>
+          <div id="costBreakdownRows"></div>
+        </div>
+      </section>
+
+      <!-- Push Builder -->
+      <section class="card">
+        <div class="card-title">
+          <h2 data-i18n="pushBuilder">Push Notification Builder</h2>
+          <span id="pushStatusBadge" class="badge badge-green badge-dot" data-i18n="valid">صالح</span>
+        </div>
+        <div class="row">
+          <div>
+            <label for="maxTitle" data-i18n="maxTitle">أقصى حروف العنوان</label>
+            <input id="maxTitle" type="number" min="1" value="34" oninput="App.queueCalc()" />
+          </div>
+          <div>
+            <label for="maxBody" data-i18n="maxBody">أقصى حروف النص</label>
+            <input id="maxBody" type="number" min="1" value="150" oninput="App.queueCalc()" />
+          </div>
+        </div>
+        <div class="sms-grid" style="margin-top:12px">
+          <div class="lang-panel ar">
+            <h3 data-i18n="arabicPush">Push عربي</h3>
+            <label for="pushTitleAr" data-i18n="pushTitle">العنوان</label>
+            <input id="pushTitleAr" type="text" placeholder="مثال: عرض خاص لك" oninput="App.queueCalc()" />
+            <label for="pushBodyAr" data-i18n="pushBody">النص</label>
+            <textarea id="pushBodyAr" placeholder="اكتب نص الإشعار..." oninput="App.queueCalc()"></textarea>
+          </div>
+          <div class="lang-panel en">
+            <h3 data-i18n="englishPush">English Push</h3>
+            <label for="pushTitleEn" data-i18n="pushTitle">Title</label>
+            <input id="pushTitleEn" type="text" placeholder="Example: Special offer" oninput="App.queueCalc()" />
+            <label for="pushBodyEn" data-i18n="pushBody">Body</label>
+            <textarea id="pushBodyEn" placeholder="Enter push body..." oninput="App.queueCalc()"></textarea>
+          </div>
+        </div>
+        <div class="stats-grid" style="margin-top:12px">
+          <div class="stat"><div class="lbl" data-i18n="arTitle">عنوان عربي</div><div id="arPushTitleCount" class="val">0</div></div>
+          <div class="stat"><div class="lbl" data-i18n="arBody">نص عربي</div><div id="arPushBodyCount" class="val">0</div></div>
+          <div class="stat"><div class="lbl" data-i18n="enTitle">EN Title</div><div id="enPushTitleCount" class="val">0</div></div>
+          <div class="stat"><div class="lbl" data-i18n="enBody">EN Body</div><div id="enPushBodyCount" class="val">0</div></div>
+        </div>
+        <div id="pushAlerts" class="alerts"></div>
+      </section>
+
+    </main>
+
+    <!-- ══ Sidebar ══ -->
+    <aside>
+
+      <!-- Total Cost -->
+      <section class="total-card">
+        <div class="total-label" data-i18n="expectedTotalCost">إجمالي التكلفة المتوقعة</div>
+        <div id="grandTotal" class="total-value">0 SAR</div>
+        <div class="total-breakdown">
+          <div class="mini-total">
+            <span data-i18n="arabicCost">عربي</span>
+            <strong id="arTotalMini">0 SAR</strong>
+          </div>
+          <div class="mini-total">
+            <span data-i18n="englishCost">إنجليزي</span>
+            <strong id="enTotalMini">0 SAR</strong>
+          </div>
+        </div>
+      </section>
+
+      <!-- Quality Checklist -->
+      <section class="card">
+        <div class="card-title"><h2 data-i18n="qualityChecklist">فحص الجودة</h2></div>
+        <div id="qualityChecklist" class="checklist"></div>
+      </section>
+
+      <!-- Optimization Panel (quick) -->
+      <section class="card">
+        <div class="card-title"><h2 data-i18n="optimizationPanel">تنبيهات التحسين</h2></div>
+        <div id="optPanel" class="opt-panel"></div>
+      </section>
+
+      <!-- Mobile Preview -->
+      <section class="card">
+        <div class="card-title"><h2 data-i18n="mobilePreview">معاينة الجوال</h2></div>
+        <div class="preview-switch">
+          <button id="prevBtnAr" class="active" onclick="App.setPreviewLang('ar')" data-i18n="previewArabic">عربي</button>
+          <button id="prevBtnEn" onclick="App.setPreviewLang('en')" data-i18n="previewEnglish">English</button>
+        </div>
+        <div style="display:grid;gap:18px">
+          <div>
+            <p style="font-size:12px;font-weight:700;color:var(--text-muted);text-transform:uppercase;letter-spacing:.05em;margin-bottom:8px">SMS</p>
+            <div class="phone">
+              <div id="smsPhoneBar" class="phone-bar">SMS AR</div>
+              <div class="sms-screen">
+                <div id="smsPreview" class="sms-bubble ar">سيظهر النص هنا...</div>
+              </div>
+            </div>
+          </div>
+          <div>
+            <p style="font-size:12px;font-weight:700;color:var(--text-muted);text-transform:uppercase;letter-spacing:.05em;margin-bottom:8px">Push</p>
+            <div class="phone">
+              <div id="pushPhoneBar" class="phone-bar">Notification AR</div>
+              <div class="push-screen">
+                <div id="pushPreview" class="push-card ar">
+                  <div class="push-app">Your App</div>
+                  <div id="pushPreviewTitle" class="push-title">عنوان الإشعار</div>
+                  <div id="pushPreviewBody" class="push-body">نص الإشعار سيظهر هنا...</div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- Campaign Summary -->
+      <section class="card">
+        <div class="card-title"><h2 data-i18n="campaignSummary">ملخص الحملة</h2></div>
+        <div class="summary-tabs">
+          <button id="sumBtnManager"   class="active" onclick="App.setSummaryMode('manager')"   data-i18n="managerSummary">إدارة</button>
+          <button id="sumBtnFinance"              onclick="App.setSummaryMode('finance')"   data-i18n="financeSummary">مالية</button>
+          <button id="sumBtnTechnical"            onclick="App.setSummaryMode('technical')" data-i18n="technicalSummary">تقني</button>
+        </div>
+        <div id="summaryBox" class="summary-box"></div>
+        <div class="buttons">
+          <button class="btn btn-primary"    onclick="App.copySummary()"    data-i18n="copySummary">نسخ الملخص</button>
+          <button class="btn btn-success"   onclick="App.downloadSummary()" data-i18n="downloadTxt">تحميل TXT</button>
+          <button class="btn btn-secondary" onclick="App.fillDemo()"        data-i18n="demo">ديمو</button>
+          <button class="btn btn-danger"    onclick="App.resetForm()"       data-i18n="reset">إعادة تعيين</button>
+        </div>
+      </section>
+
+    </aside>
+  </div>
+
+  <div class="footer" data-i18n="footerNote">Marketing Campaign Studio Pro — جميع الحسابات تعمل محلياً داخل المتصفح.</div>
+</div>
+
+<script>
+/* ════════════════════════════════════════
+   i18n
+════════════════════════════════════════ */
+const i18n = {
+  ar: {
+    appTitle:"Campaign Cost Calculator",
+    appDescription:" ",
+    campaignBasics:"معامل التكلفة", noStorage:"بدون تخزين خارجي",
+    costPerPart:"تكلفة جزء SMS", custom:"مخصص", customCost:"تكلفة مخصصة لكل جزء",
+    sideBySideSms:"SMS", spellcheckOn:"مدقق إملائي نشط",
+    arabicSms:"عربي", englishSms:"انجليزي",
+    arabicSmsText:"نص الرسالة العربية", englishSmsText:"English SMS Text",
+    arabicRecipients:"عدد المستلمين", englishRecipients:"عدد المستلمين",
+    cleanArabic:"الغاء المسافات الزائدة", cleanEnglish:"الغاء المسافات الزائدة",
+    characters:"حروف", parts:"أجزاء", units:"وحدات", cost:"تكلفة",
+    pushBuilder:"منشئ Push", arabicPush:"Push عربي", englishPush:"English Push",
+    pushTitle:"العنوان", pushBody:"النص", maxTitle:"أقصى حروف العنوان", maxBody:"أقصى حروف النص",
+    arTitle:"عنوان عربي", arBody:"نص عربي", enTitle:"EN Title", enBody:"EN Body",
+    expectedTotalCost:"إجمالي التكلفة", arabicCost:"عربي", englishCost:"إنجليزي",
+    qualityChecklist:"فحص الجودة", optimizationPanel:"تنبيهات التحسين",
+    mobilePreview:"معاينة الجوال", previewArabic:"عربي", previewEnglish:"English",
+    campaignSummary:"ملخص الحملة", managerSummary:"إدارة", financeSummary:"مالية", technicalSummary:"تقني",
+    copySummary:"نسخ الملخص", downloadTxt:"تحميل TXT", demo:"ديمو", reset:"إعادة تعيين",
+    footerNote:"Marketing Campaign Studio Pro — جميع الحسابات تعمل محلياً داخل المتصفح.",
+    emptyArabicSms:"نص SMS العربي فارغ.", emptyEnglishSms:"نص SMS الإنجليزي فارغ.",
+    smsOnePartAr:"✅ الرسالة العربية داخل جزء واحد.", smsOnePartEn:"✅ English SMS is within 1 part.",
+    valid:"صالح", exceeded:"متجاوز",
+    copied:"تم نسخ الملخص بنجاح.", copyFailed:"فشل النسخ التلقائي.",
+    resetConfirm:"هل أنت متأكد من مسح كافة البيانات؟",
+    spellSuggest:"💡 اقتراحات التدقيق",
+    costOptimizerTitle:"محسّن التكلفة",
+    costBreakdownTitle:"تفصيل التكلفة",
+    checkArRecipients:"عدد مستلمي العربي تم إدخاله", checkArRecipientsErr:"يرجى تحديد عدد مستلمي العربي",
+    checkEnRecipients:"عدد مستلمي الإنجليزي تم إدخاله", checkEnRecipientsErr:"يرجى تحديد عدد مستلمي الإنجليزي",
+    checkCost:"التكلفة لكل جزء جاهزة", checkCostErr:"يرجى إدخال تكلفة جزء SMS صالحة",
+    checkNoLinkAr:"لا توجد روابط في SMS العربي", checkLinkAr:"🚫 يوجد رابط في SMS العربي",
+    checkNoLinkEn:"No links in English SMS", checkLinkEn:"🚫 English SMS contains a link",
+    arPartsMsg:"الرسالة العربية تتكون من {n} أجزاء.",
+    enPartsMsg:"English SMS consists of {n} parts.",
+    highCostWarning:"⚠️ التكلفة مرتفعة. راجع عدد المستلمين وأجزاء الرسالة.",
+    linkPolicyPassed:"✅ لا توجد روابط في SMS.",
+    arPushExceed:"الإشعار العربي تجاوز الحد المسموح للحروف.",
+    enPushExceed:"English push notification exceeds character limits.",
+    pushOk:"✅ Push ضمن الحد المسموح.",
+    tipNoLink:"🚫 لا يمكن إرسال الرسالة — تحتوي على رابط ممنوع",
+    tipSinglePart:"✅ ممتاز! رسالتاك في جزء واحد — أقل تكلفة ممكنة",
+    tipTrimAr:"✂️ قص {n} حرف من العربية → تنزل لـ {p} أجزاء → توفر {s} SAR",
+    tipTrimEn:"✂️ قص {n} حرف من الإنجليزية → تنزل لـ {p} أجزاء → توفر {s} SAR",
+    tipEmptyAr:"نص SMS العربي فارغ — لا توجد تكلفة.",
+    tipEmptyEn:"نص SMS الإنجليزي فارغ — لا توجد تكلفة.",
+    tipBulkDiscount:"💰 عدد المستلمين كبير — تفاوض على سعر الجملة مع مزود الخدمة.",
+    tipSplitCampaign:"📅 فكر في تقسيم الحملة لأيام متعددة لتقليل التكلفة الفورية.",
+    tipCostPerRecipient:"💡 متوسط تكلفة المستلم:",
+    tipCostPerRecipientAr:"💡 تكلفة المستلم العربي الواحد:",
+    tipCostPerRecipientEn:"💡 تكلفة المستلم الإنجليزي الواحد:",
+    breakdownArUnits:"وحدات عربي × تكلفة/جزء",
+    breakdownEnUnits:"وحدات إنجليزي × تكلفة/جزء",
+    breakdownTotal:"الإجمالي",
+    breakdownTotal:"الإجمالي",
+  },
+  en: {
+    appTitle:"Campaign Cost Calculator",
+    appDescription:" ",
+    campaignBasics:"Campaign Inputs", noStorage:"No external storage",
+    costPerPart:"Cost Per SMS Part", custom:"Custom", customCost:"Custom cost per part",
+    sideBySideSms:"SMS", spellcheckOn:"Spellcheck Active",
+    arabicSms:"Arabic", englishSms:"English",
+    arabicSmsText:"Arabic SMS Text", englishSmsText:"English SMS Text",
+    arabicRecipients:"Arabic Recipients", englishRecipients:"English Recipients",
+    cleanArabic:"Clean Arabic", cleanEnglish:"Clean English",
+    characters:"Chars", parts:"Parts", units:"Units", cost:"Cost",
+    pushBuilder:"Push Builder", arabicPush:"Arabic Push", englishPush:"English Push",
+    pushTitle:"Title", pushBody:"Body", maxTitle:"Max Title Chars", maxBody:"Max Body Chars",
+    arTitle:"AR Title", arBody:"AR Body", enTitle:"EN Title", enBody:"EN Body",
+    expectedTotalCost:"Expected Total Cost", arabicCost:"Arabic", englishCost:"English",
+    qualityChecklist:"Quality Checklist", optimizationPanel:"Optimization Alerts",
+    mobilePreview:"Mobile Preview", previewArabic:"Arabic", previewEnglish:"English",
+    campaignSummary:"Campaign Summary", managerSummary:"Manager", financeSummary:"Finance", technicalSummary:"Technical",
+    copySummary:"Copy Summary", downloadTxt:"Download TXT", demo:"Demo", reset:"Reset",
+    footerNote:"Marketing Campaign Studio Pro — all calculations run locally in the browser.",
+    emptyArabicSms:"Arabic SMS text is empty.", emptyEnglishSms:"English SMS text is empty.",
+    smsOnePartAr:"✅ Arabic SMS is within 1 part.", smsOnePartEn:"✅ English SMS is within 1 part.",
+    valid:"Valid", exceeded:"Exceeded",
+    copied:"Summary copied successfully.", copyFailed:"Copy failed.",
+    resetConfirm:"Are you sure you want to clear all data?",
+    spellSuggest:"💡 Spellcheck Suggestions",
+    costOptimizerTitle:"Cost Optimizer",
+    costBreakdownTitle:"Cost Breakdown",
+    checkArRecipients:"Arabic recipients set", checkArRecipientsErr:"Please set Arabic recipients",
+    checkEnRecipients:"English recipients set", checkEnRecipientsErr:"Please set English recipients",
+    checkCost:"Cost per part is set", checkCostErr:"Please enter a valid SMS part cost",
+    checkNoLinkAr:"No links in Arabic SMS", checkLinkAr:"🚫 Arabic SMS contains a link",
+    checkNoLinkEn:"No links in English SMS", checkLinkEn:"🚫 English SMS contains a link",
+    arPartsMsg:"Arabic SMS is {n} parts.",
+    enPartsMsg:"English SMS is {n} parts.",
+    highCostWarning:"⚠️ High estimated cost. Review recipients and SMS parts.",
+    linkPolicyPassed:"✅ No links detected in SMS.",
+    arPushExceed:"Arabic push exceeds character limits.",
+    enPushExceed:"English push notification exceeds character limits.",
+    pushOk:"✅ Push notifications within limits.",
+    tipNoLink:"🚫 Campaign blocked — SMS contains a prohibited link",
+    tipSinglePart:"✅ Great! Both messages fit in 1 part — lowest possible cost",
+    tipTrimAr:"✂️ Remove {n} chars from Arabic → drop to {p} parts → save {s} SAR",
+    tipTrimEn:"✂️ Remove {n} chars from English → drop to {p} parts → save {s} SAR",
+    tipEmptyAr:"Arabic SMS is empty — no cost.",
+    tipEmptyEn:"English SMS is empty — no cost.",
+    tipBulkDiscount:"💰 Large audience — negotiate bulk pricing with your SMS provider.",
+    tipSplitCampaign:"📅 Consider splitting campaign across days to reduce immediate spend.",
+    tipCostPerRecipient:"💡 Average cost per recipient:",
+    tipCostPerRecipientAr:"💡 Arabic cost per recipient:",
+    tipCostPerRecipientEn:"💡 English cost per recipient:",
+    breakdownArUnits:"Arabic units × cost/part",
+    breakdownEnUnits:"English units × cost/part",
+    breakdownTotal:"Total",
+  }
+};
+
+/* ════════════════════════════════════════
+   Dictionary
+════════════════════════════════════════ */
+const dict = {
+  ar: {
+    "أخصم":"خصم","إضغط":"اضغط","أشترك":"اشترك","مضمونه":"مضمونة",
+    "أحصل":"احصل","لجميع":"لكافة","مبروك":"مبارك","انتم":"أنتم",
+    "الي":"إلى","الى":"إلى","ان":"أن","هذء":"هذه","هاذا":"هذا",
+    "لاكن":"لكن","انشاءالله":"إن شاء الله","مسؤل":"مسؤول",
+    "الان":"الآن","اكثر":"أكثر","اقل":"أقل"
+  },
+  en: {
+    "discont":"discount","offfer":"offer","clik":"click","subscibe":"subscribe",
+    "recive":"receive","recieve":"receive","fre":"free","seperate":"separate",
+    "adress":"address","limitted":"limited","costumer":"customer","costumers":"customers"
+  }
+};
+
+/* ════════════════════════════════════════
+   App
+════════════════════════════════════════ */
+const App = {
+  state: {
+    lang: "ar",
+    previewLang: "ar",
+    summaryMode: "manager",
+    calcTimeout: null,
+    linkBlocked: false,
+    lastCalc: null   // FIX: store last calc result for summary (don't read from DOM)
+  },
+
+  /* ── Element cache ── */
+  _el: null,
+  get el() {
+    if (this._el) return this._el;
+    const ids = [
+      "costPerPartSelect","customCostWrapper","customCostInput",
+      "arRecipients","enRecipients","smsAr","smsEn",
+      "arChars","arParts","arUnits","arCost",
+      "enChars","enParts","enUnits","enCost",
+      "grandTotal","arTotalMini","enTotalMini",
+      "arAlerts","enAlerts","pushAlerts","optPanel","qualityChecklist",
+      "summaryBox","pushTitleAr","pushBodyAr","pushTitleEn","pushBodyEn",
+      "maxTitle","maxBody",
+      "arPushTitleCount","arPushBodyCount","enPushTitleCount","enPushBodyCount",
+      "pushStatusBadge","smsPreview","pushPreview","pushPreviewTitle","pushPreviewBody",
+      "smsPhoneBar","pushPhoneBar","arSpellBox","arSpellErrors","enSpellBox","enSpellErrors",
+      "optimizerTips","costBreakdownRows"
+    ];
+    const cache = {};
+    let ok = true;
+    ids.forEach(id => {
+      const el = document.getElementById(id);
+      if (!el) { console.warn("[Studio] Missing element:", id); ok = false; }
+      cache[id] = el;
+    });
+    if (ok) this._el = cache;  // only cache if all found
+    return cache;
+  },
+
+  /* ── Init ── */
+  init() {
+    this.setLanguage("ar");
+    this.setPreviewLang("ar");
+    this.calcAll();
+  },
+
+  t(key, vars = {}) {
+    let str = i18n[this.state.lang][key] || key;
+    Object.entries(vars).forEach(([k,v]) => { str = str.replaceAll(`{${k}}`, v); });
+    return str;
+  },
+
+  /* ── Language ── */
+  setLanguage(lang) {
+    this.state.lang = lang;
+    document.documentElement.lang = lang;
+    document.documentElement.dir = lang === "ar" ? "rtl" : "ltr";
+    document.getElementById("btnAr").classList.toggle("active", lang === "ar");
+    document.getElementById("btnEn").classList.toggle("active", lang === "en");
+    document.querySelectorAll("[data-i18n]").forEach(el => {
+      el.textContent = this.t(el.getAttribute("data-i18n"));
+    });
+    this.calcAll();
+  },
+
+  setPreviewLang(lang) {
+    this.state.previewLang = lang;
+    document.getElementById("prevBtnAr").classList.toggle("active", lang === "ar");
+    document.getElementById("prevBtnEn").classList.toggle("active", lang === "en");
+    this.updatePreview();
+  },
+
+  setSummaryMode(mode) {
+    this.state.summaryMode = mode;
+    ["manager","finance","technical"].forEach(m => {
+      document.getElementById("sumBtn" + m.charAt(0).toUpperCase() + m.slice(1))
+        .classList.toggle("active", m === mode);
+    });
+    this.renderSummary();
+  },
+
+  /* ── Cost ── */
+  handleCostSelection() {
+    const isCustom = this.el.costPerPartSelect.value === "custom";
+    this.el.customCostWrapper.classList.toggle("hidden", !isCustom);
+    this.calcAll();
+  },
+
+  getCostPerPart() {
+    if (this.el.costPerPartSelect.value === "custom") {
+      return parseFloat(this.el.customCostInput.value) || 0;
+    }
+    return parseFloat(this.el.costPerPartSelect.value) || 0;
+  },
+
+  fmt(v) {
+    return Number(v).toLocaleString("en-US", { minimumFractionDigits: 0, maximumFractionDigits: 4 });
+  },
+
+  queueCalc() {
+    clearTimeout(this.state.calcTimeout);
+    this.state.calcTimeout = setTimeout(() => this.calcAll(), 100);
+  },
+
+  /* ── Link detection ── */
+  hasLink(text) {
+    // Must have a recognisable URL pattern — not just a TLD fragment
+    return /(https?:\/\/[^\s]+|www\.[^\s]+|bit\.ly\/|t\.co\/|wa\.me\/|goo\.gl\/|tinyurl\.com|linktr\.ee|snapchat\.com|instagram\.com|(?:^|[\s])x\.com|twitter\.com)/i.test(text)
+        || /\b[\w-]+\.(com|net|org|sa|io|app|co)\b/i.test(text);
+  },
+
+  /* ── SMS calc ── */
+  calcSms(text, limit, recipients, cpp) {
+    const chars = text.length;
+    const parts = chars > 0 ? Math.ceil(chars / limit) : 0;
+    const units = parts * (Math.max(0, parseInt(recipients) || 0));
+    const cost  = units * cpp;
+    return { chars, parts, units, cost };
+  },
+
+  /* ── Arabic word boundary for spell correction ── */
+  // \b doesn't work with Arabic; use Unicode-aware lookaround
+  arabicWordRegex(word) {
+    // surrounds with non-Arabic-letter boundaries
+    return new RegExp(`(?<![\\u0600-\\u06ff])${word}(?![\\u0600-\\u06ff])`, "g");
+  },
+
+  /* ── Main calculation ── */
+  calcAll() {
+    const el  = this.el;
+    const cpp = this.getCostPerPart();
+    const txtAr = el.smsAr.value;
+    const txtEn = el.smsEn.value;
+    const rAr = Math.max(0, parseInt(el.arRecipients.value, 10) || 0);
+    const rEn = Math.max(0, parseInt(el.enRecipients.value, 10) || 0);
+
+    const arSms = this.calcSms(txtAr, 70,  rAr, cpp);
+    const enSms = this.calcSms(txtEn, 120, rEn, cpp);
+    const grand = arSms.cost + enSms.cost;
+
+    /* push */
+    const tArP = el.pushTitleAr.value.length;
+    const bArP = el.pushBodyAr.value.length;
+    const tEnP = el.pushTitleEn.value.length;
+    const bEnP = el.pushBodyEn.value.length;
+    const maxT = parseInt(el.maxTitle.value, 10) || 34;
+    const maxB = parseInt(el.maxBody.value, 10) || 150;
+    const pushOk = tArP<=maxT && bArP<=maxB && tEnP<=maxT && bEnP<=maxB;
+
+    /* store result in state — don't read from DOM later */
+    this.state.lastCalc = { txtAr, txtEn, rAr, rEn, cpp, arSms, enSms, grand, tArP, bArP, tEnP, bEnP, maxT, maxB, pushOk };
+
+    /* update UI */
+    el.arChars.textContent = arSms.chars;
+    el.arParts.textContent = arSms.parts;
+    el.arUnits.textContent = arSms.units;
+    el.arCost.textContent  = this.fmt(arSms.cost);
+
+    el.enChars.textContent = enSms.chars;
+    el.enParts.textContent = enSms.parts;
+    el.enUnits.textContent = enSms.units;
+    el.enCost.textContent  = this.fmt(enSms.cost);
+
+    el.grandTotal.textContent  = this.fmt(grand) + " SAR";
+    el.arTotalMini.textContent = this.fmt(arSms.cost) + " SAR";
+    el.enTotalMini.textContent = this.fmt(enSms.cost) + " SAR";
+
+    el.arPushTitleCount.textContent = tArP;
+    el.arPushBodyCount.textContent  = bArP;
+    el.enPushTitleCount.textContent = tEnP;
+    el.enPushBodyCount.textContent  = bEnP;
+    el.pushStatusBadge.textContent  = pushOk ? this.t("valid") : this.t("exceeded");
+    el.pushStatusBadge.className    = "badge " + (pushOk ? "badge-green badge-dot" : "badge-red badge-dot");
+
+    this.checkSpell("smsAr", "ar", el.arSpellBox, el.arSpellErrors);
+    this.checkSpell("smsEn", "en", el.enSpellBox, el.enSpellErrors);
+    this.updateAlerts(this.state.lastCalc);
+    this.renderCostOptimizer(this.state.lastCalc);
+    this.updatePreview();
+    this.renderSummary();
+  },
+
+  /* ── Alerts ── */
+  _alert(container, type, msg) {
+    const d = document.createElement("div");
+    d.className = "alert " + type;
+    d.textContent = msg;
+    container.appendChild(d);
+  },
+
+  updateAlerts(d) {
+    const el = this.el;
+    [el.arAlerts, el.enAlerts, el.pushAlerts, el.optPanel, el.qualityChecklist].forEach(c => c.innerHTML = "");
+
+    const arLink = this.hasLink(d.txtAr);
+    const enLink = this.hasLink(d.txtEn);
+    this.state.linkBlocked = arLink || enLink;
+
+    if (arLink) {
+      this._alert(el.arAlerts, "blocker", "🚫 ممنوع وضع روابط داخل رسائل SMS العربية. يجب إزالة الرابط.");
+      this._alert(el.optPanel, "danger", "🚫 BLOCKER: Arabic SMS contains a prohibited link.");
+    }
+    if (enLink) {
+      this._alert(el.enAlerts, "blocker", "🚫 Links are not allowed in English SMS. Remove before sending.");
+      this._alert(el.optPanel, "danger", "🚫 BLOCKER: English SMS contains a prohibited link.");
     }
 
-    function template(text, values) {
-      return text.replace(/\{(\w+)\}/g, function(match, key) {
-        return values[key] !== undefined ? values[key] : match;
-      });
+    if (!d.txtAr.trim())      this._alert(el.arAlerts, "warning", this.t("emptyArabicSms"));
+    else if (d.arSms.parts===1 && !arLink) this._alert(el.arAlerts, "success", this.t("smsOnePartAr"));
+    else if (!arLink)         this._alert(el.arAlerts, "warning", this.t("arPartsMsg", {n: d.arSms.parts}));
+
+    if (!d.txtEn.trim())      this._alert(el.enAlerts, "warning", this.t("emptyEnglishSms"));
+    else if (d.enSms.parts===1 && !enLink) this._alert(el.enAlerts, "success", this.t("smsOnePartEn"));
+    else if (!enLink)         this._alert(el.enAlerts, "warning", this.t("enPartsMsg", {n: d.enSms.parts}));
+
+    if (d.tArP > d.maxT || d.bArP > d.maxB) this._alert(el.pushAlerts, "danger", this.t("arPushExceed"));
+    if (d.tEnP > d.maxT || d.bEnP > d.maxB) this._alert(el.pushAlerts, "danger", this.t("enPushExceed"));
+    if (d.pushOk) this._alert(el.pushAlerts, "success", this.t("pushOk"));
+
+    if (!arLink && !enLink && d.txtAr.trim() && d.txtEn.trim())
+      this._alert(el.optPanel, "success", this.t("linkPolicyPassed"));
+    if (d.grand > 10000)
+      this._alert(el.optPanel, "warning", this.t("highCostWarning"));
+
+    /* checklist */
+    const cl = el.qualityChecklist;
+    this._checkItem(cl, d.rAr > 0, this.t("checkArRecipients"), this.t("checkArRecipientsErr"));
+    this._checkItem(cl, d.rEn > 0, this.t("checkEnRecipients"), this.t("checkEnRecipientsErr"));
+    this._checkItem(cl, d.cpp > 0, this.t("checkCost"), this.t("checkCostErr"));
+    this._checkItem(cl, !arLink, this.t("checkNoLinkAr"), this.t("checkLinkAr"), true);
+    this._checkItem(cl, !enLink, this.t("checkNoLinkEn"), this.t("checkLinkEn"), true);
+  },
+
+  _checkItem(container, ok, okText, badText, blocked = false) {
+    const item = document.createElement("div");
+    item.className = "check-item" + (!ok && blocked ? " blocked" : "");
+    const icon = document.createElement("span");
+    icon.className = "check-icon " + (ok ? "ok" : "bad");
+    icon.textContent = ok ? "✓" : "✗";
+    const lbl = document.createElement("span");
+    lbl.textContent = ok ? okText : badText;
+    item.appendChild(icon); item.appendChild(lbl);
+    container.appendChild(item);
+  },
+
+  /* ══════════════════════════════════════
+     Cost Optimizer
+  ══════════════════════════════════════ */
+  renderCostOptimizer(d) {
+    const el = this.el;
+    const tips = el.optimizerTips;
+    const breakdown = el.costBreakdownRows;
+    tips.innerHTML = "";
+    breakdown.innerHTML = "";
+
+    const arLink = this.hasLink(d.txtAr);
+    const enLink = this.hasLink(d.txtEn);
+    const cpp = d.cpp;
+
+    /* ── Tips ── */
+    if (arLink || enLink) {
+      this._tip(tips, "danger", this.t("tipNoLink"), null);
     }
 
-    function setLanguage(lang) {
-      currentLanguage = lang;
+    const hasArText = d.txtAr.trim().length > 0;
+    const hasEnText = d.txtEn.trim().length > 0;
 
-      document.documentElement.lang = lang;
-      document.documentElement.dir = lang === "ar" ? "rtl" : "ltr";
-
-      document.getElementById("btnAr").classList.toggle("active", lang === "ar");
-      document.getElementById("btnEn").classList.toggle("active", lang === "en");
-
-      document.querySelectorAll("[data-i18n]").forEach(function(el) {
-        el.textContent = t(el.getAttribute("data-i18n"));
-      });
-
-      document.querySelectorAll("[data-i18n-placeholder]").forEach(function(el) {
-        el.placeholder = t(el.getAttribute("data-i18n-placeholder"));
-      });
-
-      calculateAll();
+    // If both fit in 1 part
+    if (!arLink && !enLink && hasArText && hasEnText && d.arSms.parts === 1 && d.enSms.parts === 1) {
+      this._tip(tips, "saving", this.t("tipSinglePart"), null);
     }
 
-    function getNumber(id) {
-      const value = parseFloat(document.getElementById(id).value);
-      return isNaN(value) ? 0 : value;
-    }
-
-    function getInt(id) {
-      const value = parseInt(document.getElementById(id).value, 10);
-      return isNaN(value) ? 0 : value;
-    }
-
-    function getText(id) {
-      return document.getElementById(id).value || "";
-    }
-
-    function formatNumber(number, maxDigits = 6) {
-      return Number(number).toLocaleString("en-US", {
-        minimumFractionDigits: 0,
-        maximumFractionDigits: maxDigits
-      });
-    }
-
-    function countCharacters(text) {
-      return text.length;
-    }
-
-    function hasArabic(text) {
-      return /[\u0600-\u06FF]/.test(text);
-    }
-
-    function hasEnglish(text) {
-      return /[A-Za-z]/.test(text);
-    }
-
-    function hasUrl(text) {
-      return /(https?:\/\/|www\.|\.com|\.net|\.sa|\.org)/i.test(text);
-    }
-
-    function hasEmoji(text) {
-      return /[\u{1F300}-\u{1FAFF}]/u.test(text);
-    }
-
-    function hasExtraSpaces(text) {
-      return /\s{2,}/.test(text) || text !== text.trim();
-    }
-
-    function detectLanguage(text) {
-      const arabic = hasArabic(text);
-      const english = hasEnglish(text);
-
-      if (arabic && english) return "mixed";
-      if (arabic) return "arabic";
-      if (english) return "english";
-      return "unknown";
-    }
-
-    function getEffectiveSmsLanguage() {
-      const mode = document.getElementById("smsLanguageMode").value;
-      const text = getText("smsText");
-
-      if (mode === "arabic") return "arabic";
-      if (mode === "english") return "english";
-
-      const detected = detectLanguage(text);
-
-      if (detected === "arabic") return "arabic";
-      if (detected === "english") return "english";
-      if (detected === "mixed") return "arabic";
-
-      return "arabic";
-    }
-
-    function getCharactersPerPart(language) {
-      if (language === "english") return 120;
-      return 70;
-    }
-
-    function handleCostSelection() {
-      const selectedCost = document.getElementById("costPerPartSelect").value;
-      const customWrapper = document.getElementById("customCostWrapper");
-
-      if (selectedCost === "custom") {
-        customWrapper.classList.remove("hidden");
-      } else {
-        customWrapper.classList.add("hidden");
-      }
-    }
-
-    function getCostPerPart() {
-      const selected = document.getElementById("costPerPartSelect").value;
-
-      if (selected === "custom") {
-        return getNumber("customCostPerPart");
-      }
-
-      return parseFloat(selected) || 0;
-    }
-
-    function getDisplayedCostPerPart() {
-      const selected = document.getElementById("costPerPartSelect").value;
-
-      if (selected === "custom") {
-        return getText("customCostPerPart") || "0";
-      }
-
-      return selected;
-    }
-
-    function addAlert(containerId, type, message) {
-      const container = document.getElementById(containerId);
-      const div = document.createElement("div");
-      div.className = "alert " + type;
-      div.innerHTML = message;
-      container.appendChild(div);
-    }
-
-    function clearAlerts() {
-      document.getElementById("smsAlerts").innerHTML = "";
-      document.getElementById("pushAlerts").innerHTML = "";
-    }
-
-    function calculateSavingsDetails(characters, charactersPerPart, currentParts, recipients, costPerPart) {
-      if (currentParts <= 1 || characters <= 0) {
-        return null;
-      }
-
-      const targetParts = currentParts - 1;
-      const targetMaxCharacters = targetParts * charactersPerPart;
-      const charsToReduce = characters - targetMaxCharacters;
-
-      const currentUnits = currentParts * recipients;
-      const targetUnits = targetParts * recipients;
-
-      const currentCost = currentUnits * costPerPart;
-      const targetCost = targetUnits * costPerPart;
-      const saving = currentCost - targetCost;
-
-      return {
-        currentParts,
-        targetParts,
-        charsToReduce,
-        currentCost,
-        targetCost,
-        saving
-      };
-    }
-
-    function calculateSMS() {
-      const recipients = getInt("recipients");
-      const smsText = getText("smsText");
-      const characters = countCharacters(smsText);
-      const detectedLanguage = detectLanguage(smsText);
-      const smsLanguage = getEffectiveSmsLanguage();
-      const charactersPerPart = getCharactersPerPart(smsLanguage);
-      const smsParts = characters > 0 ? Math.ceil(characters / charactersPerPart) : 0;
-      const totalSmsUnits = smsParts * recipients;
-      const costPerPart = getCostPerPart();
-      const smsCost = totalSmsUnits * costPerPart;
-
-      document.getElementById("smsCharacters").textContent = formatNumber(characters, 0);
-      document.getElementById("charactersPerPart").textContent = charactersPerPart;
-      document.getElementById("smsParts").textContent = smsParts;
-      document.getElementById("totalSmsUnits").textContent = formatNumber(totalSmsUnits, 0);
-      document.getElementById("displayCostPerPart").textContent = getDisplayedCostPerPart();
-      document.getElementById("smsTotalCost").textContent = formatNumber(smsCost, 6);
-
-      const badge = document.getElementById("smsLanguageBadge");
-
-      if (detectedLanguage === "mixed") {
-        badge.textContent = t("mixed");
-        badge.className = "badge badge-yellow";
-      } else if (smsLanguage === "arabic") {
-        badge.textContent = t("arabic");
-        badge.className = "badge badge-blue";
-      } else {
-        badge.textContent = t("english");
-        badge.className = "badge badge-green";
-      }
-
-      if (characters === 0) {
-        addAlert("smsAlerts", "warning", t("alertSmsEmpty"));
-      }
-
-      if (detectedLanguage === "mixed") {
-        addAlert("smsAlerts", "warning", t("alertMixed"));
-      }
-
-      if (hasUrl(smsText)) {
-        addAlert("smsAlerts", "info", t("alertUrlSms"));
-      }
-
-      if (hasEmoji(smsText)) {
-        addAlert("smsAlerts", "warning", t("alertEmoji"));
-      }
-
-      if (hasExtraSpaces(smsText)) {
-        addAlert("smsAlerts", "warning", t("alertSpaces"));
-      }
-
-      if (smsParts >= 3) {
-        addAlert("smsAlerts", "danger", template(t("alertLong"), { parts: smsParts }));
-      } else if (smsParts === 2) {
-        addAlert("smsAlerts", "warning", t("alertTwoParts"));
-      } else if (smsParts === 1 && characters > 0) {
-        addAlert("smsAlerts", "success", t("alertOnePart"));
-      }
-
-      const savingDetails = calculateSavingsDetails(
-        characters,
-        charactersPerPart,
-        smsParts,
-        recipients,
-        costPerPart
-      );
-
-      if (savingDetails && savingDetails.charsToReduce > 0) {
-        addAlert(
-          "smsAlerts",
-          "info",
-          template(t("savingAlert"), {
-            chars: formatNumber(savingDetails.charsToReduce, 0),
-            current: savingDetails.currentParts,
-            target: savingDetails.targetParts,
-            currentCost: formatNumber(savingDetails.currentCost, 6),
-            targetCost: formatNumber(savingDetails.targetCost, 6),
-            saving: formatNumber(savingDetails.saving, 6)
-          })
+    // Arabic: how many chars to trim to reach previous part boundary?
+    if (!arLink && !enLink && hasArText && d.arSms.parts > 1) {
+      const charsInCurPart = d.txtAr.length % 70 || 70;
+      const charsToTrim = charsInCurPart;
+      const newParts = d.arSms.parts - 1;
+      const newCost = newParts * d.rAr * cpp;
+      const saving = d.arSms.cost - newCost;
+      if (saving > 0) {
+        this._tip(tips, "saving",
+          this.t("tipTrimAr", { n: charsToTrim, p: newParts, s: this.fmt(saving) }),
+          saving
         );
       }
-
-      return {
-        characters,
-        detectedLanguage,
-        smsLanguage,
-        charactersPerPart,
-        smsParts,
-        totalSmsUnits,
-        costPerPart,
-        smsCost
-      };
     }
 
-    function calculatePush() {
-      const title = getText("pushTitle");
-      const body = getText("pushBody");
-      const maxTitle = getInt("maxTitle");
-      const maxBody = getInt("maxBody");
-
-      const titleCharacters = countCharacters(title);
-      const bodyCharacters = countCharacters(body);
-
-      const titleRemaining = maxTitle - titleCharacters;
-      const bodyRemaining = maxBody - bodyCharacters;
-
-      const titleValid = titleCharacters <= maxTitle;
-      const bodyValid = bodyCharacters <= maxBody;
-      const pushValid = titleValid && bodyValid;
-
-      document.getElementById("titleCharacters").textContent = titleCharacters;
-      document.getElementById("titleRemaining").textContent = titleRemaining;
-      document.getElementById("bodyCharacters").textContent = bodyCharacters;
-      document.getElementById("bodyRemaining").textContent = bodyRemaining;
-
-      const badge = document.getElementById("pushStatusBadge");
-
-      if (pushValid) {
-        badge.textContent = t("valid");
-        badge.className = "badge badge-green";
-      } else {
-        badge.textContent = t("exceeded");
-        badge.className = "badge badge-red";
+    // English: same
+    if (!arLink && !enLink && hasEnText && d.enSms.parts > 1) {
+      const charsInCurPart = d.txtEn.length % 120 || 120;
+      const charsToTrim = charsInCurPart;
+      const newParts = d.enSms.parts - 1;
+      const newCost = newParts * d.rEn * cpp;
+      const saving = d.enSms.cost - newCost;
+      if (saving > 0) {
+        this._tip(tips, "saving",
+          this.t("tipTrimEn", { n: charsToTrim, p: newParts, s: this.fmt(saving) }),
+          saving
+        );
       }
+    }
 
-      if (titleCharacters === 0) {
-        addAlert("pushAlerts", "warning", t("pushTitleEmptyAlert"));
+    // Empty SMS tips
+    if (!arLink && !enLink && !hasArText) this._tip(tips, "info", this.t("tipEmptyAr"), null);
+    if (!arLink && !enLink && !hasEnText) this._tip(tips, "info", this.t("tipEmptyEn"), null);
+
+    // Bulk discount hint
+    const totalRecip = d.rAr + d.rEn;
+    if (!arLink && !enLink && totalRecip >= 50000) {
+      this._tip(tips, "warning", this.t("tipBulkDiscount"), null);
+    }
+
+    // Cost per recipient by language
+    // Arabic and English audiences can have different recipients and different SMS parts,
+    // so showing one blended number can be misleading.
+    if (!arLink && !enLink && d.rAr > 0 && d.arSms.cost > 0) {
+      const arCostPerRecipient = d.arSms.cost / d.rAr;
+      this._tip(tips, "info", this.t("tipCostPerRecipientAr") + " " + this.fmt(arCostPerRecipient) + " SAR", null);
+    }
+
+    if (!arLink && !enLink && d.rEn > 0 && d.enSms.cost > 0) {
+      const enCostPerRecipient = d.enSms.cost / d.rEn;
+      this._tip(tips, "info", this.t("tipCostPerRecipientEn") + " " + this.fmt(enCostPerRecipient) + " SAR", null);
+    }
+
+    /* ── Breakdown ── */
+    const rows = [
+      { label: this.t("breakdownArUnits") + ` (${d.arSms.units})`, val: this.fmt(d.arSms.cost) + " SAR" },
+      { label: this.t("breakdownEnUnits") + ` (${d.enSms.units})`, val: this.fmt(d.enSms.cost) + " SAR" },
+      { label: this.t("breakdownTotal"), val: this.fmt(d.grand) + " SAR", total: true }
+    ];
+
+    rows.forEach(r => {
+      const row = document.createElement("div");
+      row.className = "cost-row" + (r.total ? " total" : "");
+
+      const label = document.createElement("span");
+      label.textContent = r.label;
+
+      const value = document.createElement("span");
+      value.className = "cost-val";
+      value.textContent = r.val;
+
+      row.appendChild(label);
+      row.appendChild(value);
+      breakdown.appendChild(row);
+    });
+  },
+
+  _tip(container, type, text, savingAmount) {
+    const card = document.createElement("div");
+    card.className = "tip-card " + type;
+    const label = document.createElement("div");
+    label.className = "tip-label";
+    const labels = { saving:"توفير", warning:"تنبيه", info:"معلومة", danger:"محظور" };
+    const labelsEn = { saving:"Saving", warning:"Warning", info:"Info", danger:"Blocked" };
+    label.textContent = this.state.lang === "ar" ? labels[type] : labelsEn[type];
+    const txt = document.createElement("div");
+    txt.className = "tip-text"; txt.textContent = text;
+    card.appendChild(label); card.appendChild(txt);
+    if (savingAmount && savingAmount > 0) {
+      const s = document.createElement("div");
+      s.className = "tip-saving-amount";
+      s.textContent = "− " + this.fmt(savingAmount) + " SAR";
+      card.appendChild(s);
+    }
+    container.appendChild(card);
+  },
+
+  /* ── Spellcheck ── */
+  checkSpell(textareaId, lang, boxEl, errorsEl) {
+    const text = document.getElementById(textareaId).value;
+    const isArabic = lang === "ar";
+    // FIX: for Arabic, split on whitespace + punctuation without lowercasing Arabic letters
+    const words = text
+      .replace(/[.,/#!$%^&*;:{}=\-_`~()؟?،]/g, " ")
+      .split(/\s+/)
+      .filter(Boolean)
+      .map(w => isArabic ? w : w.toLowerCase());
+
+    const langDict = dict[lang];
+    errorsEl.innerHTML = "";
+    let found = false;
+    const seen = new Set();
+
+    words.forEach(word => {
+      const key = isArabic ? word : word;
+      if (langDict[key] && !seen.has(key)) {
+        found = true; seen.add(key);
+        const badge = document.createElement("span");
+        badge.className = "spell-badge";
+        const wrong = document.createElement("span"); wrong.className = "wrong"; wrong.textContent = key;
+        const arrow = document.createTextNode(" ← ");
+        const right = document.createElement("span"); right.className = "right"; right.textContent = langDict[key];
+        badge.appendChild(wrong); badge.appendChild(arrow); badge.appendChild(right);
+        badge.onclick = () => this.applySpell(textareaId, key, langDict[key], isArabic);
+        errorsEl.appendChild(badge);
       }
+    });
+    boxEl.classList.toggle("hidden", !found);
+  },
 
-      if (bodyCharacters === 0) {
-        addAlert("pushAlerts", "warning", t("pushBodyEmptyAlert"));
-      }
-
-      if (!titleValid) {
-        addAlert("pushAlerts", "danger", template(t("pushTitleExceeded"), { count: Math.abs(titleRemaining) }));
-      } else {
-        addAlert("pushAlerts", "success", template(t("pushTitleValid"), { count: titleRemaining }));
-      }
-
-      if (!bodyValid) {
-        addAlert("pushAlerts", "danger", template(t("pushBodyExceeded"), { count: Math.abs(bodyRemaining) }));
-      } else {
-        addAlert("pushAlerts", "success", template(t("pushBodyValid"), { count: bodyRemaining }));
-      }
-
-      if (hasUrl(body)) {
-        addAlert("pushAlerts", "info", t("pushUrlAlert"));
-      }
-
-      return {
-        titleCharacters,
-        bodyCharacters,
-        maxTitle,
-        maxBody,
-        titleRemaining,
-        bodyRemaining,
-        titleValid,
-        bodyValid,
-        pushValid
-      };
+  /* FIX: Arabic uses unicode-aware boundary, English uses \b */
+  applySpell(textareaId, wrong, correct, isArabic) {
+    const ta = document.getElementById(textareaId);
+    if (isArabic) {
+      // Unicode-aware: replace Arabic word not surrounded by Arabic letters
+      const regex = this.arabicWordRegex(wrong);
+      ta.value = ta.value.replace(regex, correct);
+    } else {
+      const regex = new RegExp("\\b" + wrong.replace(/[.*+?^${}()|[\]\\]/g, "\\$&") + "\\b", "gi");
+      ta.value = ta.value.replace(regex, correct);
     }
+    this.calcAll();
+  },
 
-    function updateGrandTotal(totalCost) {
-      const currency = document.getElementById("currency").value;
-      document.getElementById("grandTotalCost").textContent = formatNumber(totalCost, 6) + " " + currency;
+  /* ── Clean text ── */
+  cleanText(id) {
+    const el = document.getElementById(id);
+    if (!el) return;
+    const before = el.value.length;
+    el.value = el.value.replace(/[ \t]+/g, " ").replace(/\n{3,}/g, "\n\n").trim();
+    const diff = before - el.value.length;
+    this.calcAll();
+    this._alert(
+      this.el.optPanel,
+      diff > 0 ? "success" : "info",
+      diff > 0
+        ? `✂️ تم حذف ${diff} حرف${diff > 1 ? "" : ""} زائد.`
+        : "✅ النص نظيف — لا توجد مسافات زائدة."
+    );
+  },
+
+  /* ── Preview ── */
+  updatePreview() {
+    const el = this.el;
+    const isAr = this.state.previewLang === "ar";
+    el.smsPhoneBar.textContent  = isAr ? "SMS AR" : "SMS EN";
+    el.pushPhoneBar.textContent = isAr ? "Notification AR" : "Notification EN";
+
+    const smsText = isAr ? el.smsAr.value : el.smsEn.value;
+    el.smsPreview.textContent = smsText.trim() || (isAr ? "سيظهر النص هنا..." : "SMS preview...");
+    el.smsPreview.className = "sms-bubble " + (isAr ? "ar" : "en");
+
+    const pTitle = isAr ? el.pushTitleAr.value : el.pushTitleEn.value;
+    const pBody  = isAr ? el.pushBodyAr.value  : el.pushBodyEn.value;
+    el.pushPreviewTitle.textContent = pTitle.trim() || (isAr ? "عنوان الإشعار" : "Notification Title");
+    el.pushPreviewBody.textContent  = pBody.trim()  || (isAr ? "نص الإشعار..." : "Notification body...");
+    el.pushPreview.className = "push-card " + (isAr ? "ar" : "en");
+  },
+
+  /* ── Summary — reads from state.lastCalc, NOT from DOM ── */
+  renderSummary() {
+    const d = this.state.lastCalc;
+    if (!d) return;
+    const el = this.el;
+    const mode = this.state.summaryMode;
+    const arLink = this.hasLink(d.txtAr);
+    const enLink = this.hasLink(d.txtEn);
+    const blocked = arLink || enLink;
+
+    let s = `=== CAMPAIGN STUDIO PRO | ${mode.toUpperCase()} ===\n\n`;
+    s += `SMS LINK POLICY: ${blocked ? "BLOCKED" : "PASSED"}\n`;
+    if (blocked) s += "ACTION REQUIRED: Remove all links from SMS.\n";
+    s += "\n";
+
+    if (mode === "manager") {
+      s += `Total Cost: ${this.fmt(d.grand)} SAR\n`;
+      s += `Arabic Cost: ${this.fmt(d.arSms.cost)} SAR\n`;
+      s += `English Cost: ${this.fmt(d.enSms.cost)} SAR\n`;
+      s += `Push Status: ${d.pushOk ? "Valid" : "Exceeded"}\n`;
+      s += `Campaign Status: ${blocked ? "BLOCKED" : "READY FOR REVIEW"}\n`;
+    } else if (mode === "finance") {
+      s += `Arabic Recipients: ${d.rAr.toLocaleString()}\n`;
+      s += `Arabic Parts: ${d.arSms.parts} | Units: ${d.arSms.units}\n`;
+      s += `Arabic Cost: ${this.fmt(d.arSms.cost)} SAR\n\n`;
+      s += `English Recipients: ${d.rEn.toLocaleString()}\n`;
+      s += `English Parts: ${d.enSms.parts} | Units: ${d.enSms.units}\n`;
+      s += `English Cost: ${this.fmt(d.enSms.cost)} SAR\n\n`;
+      s += `Cost Per Part: ${d.cpp} SAR\n`;
+      s += `TOTAL ESTIMATED: ${this.fmt(d.grand)} SAR\n`;
+      s += `Billing Status: ${blocked ? "BLOCKED — SMS LINK DETECTED" : "READY FOR FINANCE"}\n`;
+    } else {
+      s += `Arabic SMS | Chars: ${d.arSms.chars} | Parts: ${d.arSms.parts} | Units: ${d.arSms.units}\n`;
+      s += `Arabic Link Detected: ${arLink ? "YES — BLOCKED" : "NO"}\n\n`;
+      s += `English SMS | Chars: ${d.enSms.chars} | Parts: ${d.enSms.parts} | Units: ${d.enSms.units}\n`;
+      s += `English Link Detected: ${enLink ? "YES — BLOCKED" : "NO"}\n\n`;
+      s += `Push AR Title: ${d.tArP}/${d.maxT} | Body: ${d.bArP}/${d.maxB}\n`;
+      s += `Push EN Title: ${d.tEnP}/${d.maxT} | Body: ${d.bEnP}/${d.maxB}\n`;
+      s += `Push Status: ${d.pushOk ? "VALID" : "EXCEEDED"}\n\n`;
+      s += `Technical Status: ${blocked ? "BLOCKED" : "PASSED"}\n`;
     }
+    el.summaryBox.textContent = s;
+  },
 
-    function updatePreview() {
-      const smsText = getText("smsText").trim();
-      const pushTitle = getText("pushTitle").trim();
-      const pushBody = getText("pushBody").trim();
+  /* ── Copy / Download ── */
+  copySummary() {
+    navigator.clipboard.writeText(this.el.summaryBox.textContent)
+      .then(() => alert(this.t("copied")))
+      .catch(() => alert(this.t("copyFailed")));
+  },
 
-      document.getElementById("smsPreview").textContent = smsText || t("smsPreviewEmpty");
-      document.getElementById("pushPreviewTitle").textContent = pushTitle || t("pushTitleEmpty");
-      document.getElementById("pushPreviewBody").textContent = pushBody || t("pushBodyEmpty");
-    }
+  downloadSummary() {
+    // FIX: add UTF-8 BOM so Windows Notepad renders Arabic correctly
+    const bom = "\uFEFF";
+    const blob = new Blob([bom + this.el.summaryBox.textContent], { type: "text/plain;charset=utf-8" });
+    const a = document.createElement("a");
+    a.href = URL.createObjectURL(blob);
+    a.download = "campaign_summary_" + this.state.summaryMode + ".txt";
+    a.click();
+    URL.revokeObjectURL(a.href);
+  },
 
-    function buildSummary(sms, push, totalCost) {
-      const currency = document.getElementById("currency").value;
-      const recipients = getInt("recipients");
+  /* ── Demo ── */
+  fillDemo() {
+    const el = this.el;
+    el.arRecipients.value = "5000";
+    el.enRecipients.value = "2500";
+    el.costPerPartSelect.value = "0.0365";
+    el.customCostInput.value = "";
+    this.handleCostSelection(); // FIX: hide custom wrapper
 
-      let summary = "";
-      summary += t("summaryTitle") + "\n";
-      summary += "==========================\n\n";
+    el.smsAr.value = "أخصم خصم خاص وحصري 20% لجميع عملائنا الكرام لفترة محدودة. سارعوا الاستفادة قبل انتهاء العرض";
+    el.smsEn.value = "Get an exclusive 20% discont for our prime members. Limited time offer — tap to recive your voucher now";
 
-      summary += t("summaryRecipients") + ": " + formatNumber(recipients, 0) + "\n\n";
+    el.pushTitleAr.value = "عرض مميز لك 🔥";
+    el.pushBodyAr.value  = "لا تفوت عروض نهاية الأسبوع الرائعة، اضغط للتفاصيل.";
+    el.pushTitleEn.value = "Special Offer For You!";
+    el.pushBodyEn.value  = "Don't miss out on our weekend sales. Tap to explore.";
+    el.maxTitle.value = "34"; el.maxBody.value = "150";
 
-      summary += t("summarySmsDetails") + "\n";
-      summary += "-----------\n";
-      summary += t("summaryDetectedLanguage") + ": " + (sms.detectedLanguage || "-") + "\n";
-      summary += t("summaryBillingLanguage") + ": " + sms.smsLanguage + "\n";
-      summary += t("summaryCharacters") + ": " + sms.characters + "\n";
-      summary += t("summaryCharactersPerPart") + ": " + sms.charactersPerPart + "\n";
-      summary += t("summaryPartsPerRecipient") + ": " + sms.smsParts + "\n";
-      summary += t("summaryTotalSmsUnits") + ": " + sms.totalSmsUnits + "\n";
-      summary += t("summaryCostPerPart") + ": " + getDisplayedCostPerPart() + "\n";
-      summary += t("summarySmsCost") + ": " + formatNumber(sms.smsCost, 6) + " " + currency + "\n\n";
+    this.setPreviewLang("ar");
+    this.setSummaryMode("manager");
+    this.calcAll();
+  },
 
-      summary += t("summaryPushDetails") + "\n";
-      summary += "-------------------------\n";
-      summary += t("summaryTitleCharacters") + ": " + push.titleCharacters + " / " + push.maxTitle + "\n";
-      summary += t("summaryBodyCharacters") + ": " + push.bodyCharacters + " / " + push.maxBody + "\n";
-      summary += t("summaryTitleStatus") + ": " + (push.titleValid ? t("valid") : t("exceeded")) + "\n";
-      summary += t("summaryBodyStatus") + ": " + (push.bodyValid ? t("valid") : t("exceeded")) + "\n\n";
+  /* ── Reset ── */
+  resetForm() {
+    if (!confirm(this.t("resetConfirm"))) return;
+    const el = this.el;
+    el.arRecipients.value = "1"; el.enRecipients.value = "1";
+    el.costPerPartSelect.value = "0.0365"; el.customCostInput.value = "";
+    el.smsAr.value = ""; el.smsEn.value = "";
+    el.pushTitleAr.value = ""; el.pushBodyAr.value = "";
+    el.pushTitleEn.value = ""; el.pushBodyEn.value = "";
+    el.maxTitle.value = "34"; el.maxBody.value = "150";
+    this.handleCostSelection();
+    this.setPreviewLang("ar");
+    this.setSummaryMode("manager");
+    this.calcAll();
+  }
+};
 
-      summary += t("summaryTotal") + "\n";
-      summary += "-------------\n";
-      summary += t("summaryTotalCost") + ": " + formatNumber(totalCost, 6) + " " + currency + "\n";
-
-      document.getElementById("campaignSummaryBox").textContent = summary;
-    }
-
-    function calculateAll() {
-      clearAlerts();
-      handleCostSelection();
-
-      const sms = calculateSMS();
-      const push = calculatePush();
-
-      const totalCost = sms.smsCost || 0;
-
-      updateGrandTotal(totalCost);
-      updatePreview();
-      buildSummary(sms, push, totalCost);
-    }
-
-    function copySummary() {
-      const text = document.getElementById("campaignSummaryBox").textContent;
-
-      navigator.clipboard.writeText(text).then(function () {
-        alert(t("copied"));
-      }).catch(function () {
-        alert(t("copyFailed"));
-      });
-    }
-
-    function downloadSummary() {
-      const text = document.getElementById("campaignSummaryBox").textContent;
-
-      const blob = new Blob([text], { type: "text/plain;charset=utf-8" });
-      const url = URL.createObjectURL(blob);
-
-      const link = document.createElement("a");
-      link.href = url;
-      link.download = "campaign-summary.txt";
-      document.body.appendChild(link);
-      link.click();
-      document.body.removeChild(link);
-
-      URL.revokeObjectURL(url);
-    }
-
-    function fillDemo() {
-      document.getElementById("recipients").value = "100000";
-      document.getElementById("smsLanguageMode").value = "auto";
-      document.getElementById("costPerPartSelect").value = "0.0365";
-
-      if (currentLanguage === "ar") {
-        document.getElementById("smsText").value =
-          "عرض خاص لعملائنا المميزين! احصل على خصم 20% لفترة محدودة. تسوق الآن واستمتع بمزايا حصرية.";
-        document.getElementById("pushTitle").value = "عرض خاص لك";
-        document.getElementById("pushBody").value =
-          "خصم 20% لفترة محدودة لعملائنا المميزين. لا تفوت العرض.";
-      } else {
-        document.getElementById("smsText").value =
-          "Special offer for our valued customers! Get 20% off for a limited time. Shop now and enjoy exclusive benefits.";
-        document.getElementById("pushTitle").value = "Special offer";
-        document.getElementById("pushBody").value =
-          "Get 20% off for a limited time. Do not miss this exclusive offer.";
-      }
-
-      document.getElementById("maxTitle").value = "34";
-      document.getElementById("maxBody").value = "150";
-
-      calculateAll();
-    }
-
-    function resetForm() {
-      if (!confirm(t("resetConfirm"))) return;
-
-      document.getElementById("recipients").value = "1";
-      document.getElementById("smsLanguageMode").value = "auto";
-      document.getElementById("costPerPartSelect").value = "0.0365";
-      document.getElementById("customCostPerPart").value = "";
-      document.getElementById("smsText").value = "";
-
-      document.getElementById("maxTitle").value = "34";
-      document.getElementById("maxBody").value = "150";
-      document.getElementById("pushTitle").value = "";
-      document.getElementById("pushBody").value = "";
-
-      calculateAll();
-    }
-
-    setLanguage("ar");
-  </script>
+document.addEventListener("DOMContentLoaded", () => App.init());
+</script>
 </body>
 </html>
